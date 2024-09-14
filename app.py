@@ -2,11 +2,11 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/end')
 def hello_world():
     return render_template('index.html')
 
 
-@app.route('/home')
+@app.route('/')
 def home():
-    return '<h1> HOME PAGE <h1>'
+    return render_template('home.html')

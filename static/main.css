@@ -1,0 +1,52 @@
+
+
+
+.button {
+    background-color: #39FF14; /* Green */
+    border: none;
+    color: black;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 100%;
+    border-radius: 10px;
+    border: 2px black ;
+    
+  }
+
+
+.header_text{
+  text-decoration: underline;
+  text-decoration-color: #595959;
+  color: #595959;
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.center_input{
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 3%;
+  display: flex;
+}
+
+
+.right{
+  margin-left: 10%;
+}
+
+.text_box{
+border-radius: 10px;
+position: relative;
+text-align: center;
+box-sizing: border-box;
+width: 200%;
+margin-right: 2%; 
+
+
+
+
+}

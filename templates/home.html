@@ -1,0 +1,28 @@
+{% extends "index.html" %}
+
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+
+    <div class = "header_text">
+        <h2>Niner Exchange</h2>
+    </div>
+    {% if login %}
+    <div class = "right">
+        <button class="button"> Create Listing! </button>
+    </div>
+    {% else %}
+    <div class="right">
+
+    </div>
+    {% endif %}
+
+    <div class="center_input">
+        <input class="text_box"></input>
+        <button class="button">Search!</button>
+    </div>
+        
+    
+{% endblock %}
