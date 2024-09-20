@@ -63,9 +63,16 @@ margin-right: 2%;
 .user {
   display: flex;
   justify-content: center;
+  padding: 15px;
 }
 
-#center-input {
+.box {
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+input[type=button] {
+  display: block;
+  margin: 20px auto; 
 }
