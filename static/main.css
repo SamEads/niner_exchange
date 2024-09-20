@@ -1,6 +1,29 @@
 
 
+.topnav{
 
+  background-color: white;
+  overflow: hidden;
+  width: 100%;
+
+
+}
+.topnav .home{
+  margin-left: 2%; 
+}
+
+.topnav .sign-in{
+  position: absolute; 
+  left: 89%;
+}
+
+.topnav a:hover{
+  background-color: grey;
+
+}
+.topnav a:active{
+  background-color: white;
+}
 .button {
     background-color: #39FF14; /* Green */
     border: none;
