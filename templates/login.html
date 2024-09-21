@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="signlink">
+    <header><a href="/login">Sign in</a></header>
+    <header><a href="/registration">Register</a></header>
+</div>
+
+<h1 id="login_header">Log in</h1>
+
+<h2 class="user">Username</h2>
+<div class="box">
+    <input type="textbox" id="username" name="username">
+</div>
+
+<h2 class="user">Password</h2>
+<div class="box">
+    <input type="textbox" id="password" name="password">
+</div>
+
+<br>
+<input type="button" id="signin" name="signin" value="Sign in">
+
+{% endblock %}
