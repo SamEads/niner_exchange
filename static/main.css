@@ -95,7 +95,8 @@ margin-right: 2%;
   align-items: center;
 }
 
-input[type=button] {
+/*Temp change to text signup*/
+.post_button {
   display: block;
   margin: 20px auto; 
 }
