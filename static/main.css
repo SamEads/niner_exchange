@@ -14,7 +14,12 @@
 
 .topnav .sign-in{
   position: absolute; 
-  left: 89%;
+  left: 95%;
+}
+
+.topnav .reg{
+  position: absolute;
+  left: 90%; 
 }
 
 .topnav a:hover{

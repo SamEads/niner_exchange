@@ -27,10 +27,10 @@ def home():
 def login():
     return render_template('login.html')
 
-
 @app.route('/registration')
 def registration():
     return render_template('registration.html')
+
 
 #will authenticate user if logging in. Not working rn.
 @app.route('/auth', methods= ['POST', 'GET'])
@@ -64,7 +64,7 @@ def create():
 
     session.clear() ## will remove after proper login auth is done
 
-    sesh_usr  = session.get('username') 
+    sesh_usr = session.get('username') 
     
     if user is not None or sesh_usr is not None: # if the user is already in session or exist, ask them to login 
         return redirect('/login')
@@ -85,7 +85,3 @@ def create():
     db.session.add(new_user)
     db.session.commit()
     return redirect('/')
-    
-    
-
-
