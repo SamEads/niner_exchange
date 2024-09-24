@@ -3,8 +3,8 @@ CREATE TABLE Users (
     username VARCHAR(255) UNIQUE NOT NULL,
     first_name VARCHAR(50) NOT NULL,
     email varchar(255) UNIQUE not null, 
-    password_hash VARCHAR(255) NOT NULL,
-)
+    password_hash VARCHAR(255) NOT NULL
+);
 
 CREATE TABLE Listing (
     id SERIAL PRIMARY KEY,
@@ -15,5 +15,4 @@ CREATE TABLE Listing (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE
-
-)
+);
