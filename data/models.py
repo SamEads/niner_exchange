@@ -8,9 +8,8 @@ db = SQLAlchemy()
 class Users(db.Model):
 
 
-    def __init__(self,username,email,password_hash):
+    def __init__(self,username,password_hash):
         self.username = username
-        self.email = email
         self.password_hash = password_hash
         self.first_name = 'placeholder'
 
@@ -18,5 +17,4 @@ class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)  
     username = db.Column(db.String(255), unique=True, nullable=False) 
     first_name = db.Column(db.String(50), nullable=False)  
-    email = db.Column(db.String(255), unique=True, nullable=False) 
     password_hash = db.Column(db.String(255), nullable=False)
