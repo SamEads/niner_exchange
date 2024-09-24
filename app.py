@@ -67,11 +67,11 @@ def create():
 
 
     #generate random email, will fix later
-    email = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(5)) + '@' +''.join(random.choice(string.ascii_letters + string.digits) for _ in range(7))
+    #email = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(5)) + '@' +''.join(random.choice(string.ascii_letters + string.digits) for _ in range(7))
 
 
     hashed_password = bcrypt.generate_password_hash(password,12).decode('utf-8')
-    new_user = Users(username,email,hashed_password)
+    new_user = Users(username,hashed_password)
 
 
     session['username'] = username
