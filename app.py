@@ -3,21 +3,14 @@ from flask_bcrypt import Bcrypt
 from data.models import *
 import os,string,random
 
-
-
 app = Flask(__name__)
+bcrypt = Bcrypt()
+
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DB_CON_STR') 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'Secure'
-bcrypt = Bcrypt()
 
 db.init_app(app)
-
-
-@app.route('/end')
-def hello_world():
-    return render_template('index.html')
-
 
 @app.route('/')
 def home():

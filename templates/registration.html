@@ -1,21 +1,7 @@
-{% extends "index.html" %}
+{% extends "login.html" %}
 
-{% block content %}
-<link href="login.css" rel = "stylesheet">
+{% block title %}Registration{% endblock %}
 
-<h1 id="login_header">Register</h1>
-<form action="create" method="POST">
-    <h2 class="user">Username</h2>
-    <div class="box">
-        <input type="text" id="username" name="username" required>
-    </div>
+{% block login_text %}Register{% endblock %}
 
-    <h2 class="user">Password</h2>
-    <div class="box">
-        <input type="textbox" id="password" name="password" required>
-    </div>
-
-    <br>
-    <button class="post_button">sign up</button>
-</form>
-{% endblock %}
+{% block sign_in_text %}Sign Up{% endblock %}
