@@ -1,8 +1,10 @@
-{% extends "index.html" %}
+{% extends "base.html" %}
+
+{% block title %}Log in{% endblock %}
 
 {% block content %}
 <link href="login.css" rel = "stylesheet">
-<h1 id="login_header">Login</h1>
+<h1 id="login_header">{% block login_text %}Log in{% endblock %}</h1>
 
 <form action="create" method="POST">
     <h2 class="user">Username</h2>
@@ -16,7 +18,9 @@
     </div>
 
     <br>
-    <button class="post_button">sign up</button>
+
+    <!-- BTW, this will need a block specific for where it GETs/POSTs from so that registration does a diff action... -->
+    <button class="post_button">{% block sign_in_text %}Sign In{% endblock %}</button>
 </form>
 
 {% endblock %}
