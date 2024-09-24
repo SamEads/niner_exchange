@@ -1,24 +1,22 @@
 {% extends "index.html" %}
 
 {% block content %}
-<div class="signlink">
-    <header><a href="/login">Sign in</a></header>
-    <header><a href="/registration">Register</a></header>
-</div>
+<link href="login.css" rel = "stylesheet">
+<h1 id="login_header">Login</h1>
 
-<h1 id="login_header">Log in</h1>
+<form action="create" method="POST">
+    <h2 class="user">Username</h2>
+    <div class="box">
+        <input type="text" id="username" name="username" required>
+    </div>
 
-<h2 class="user">Username</h2>
-<div class="box">
-    <input type="textbox" id="username" name="username">
-</div>
+    <h2 class="user">Password</h2>
+    <div class="box">
+        <input type="textbox" id="password" name="password" required>
+    </div>
 
-<h2 class="user">Password</h2>
-<div class="box">
-    <input type="textbox" id="password" name="password">
-</div>
-
-<br>
-<input type="button" id="signin" name="signin" value="Sign in">
+    <br>
+    <button class="post_button">sign up</button>
+</form>
 
 {% endblock %}

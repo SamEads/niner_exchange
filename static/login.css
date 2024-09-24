@@ -1,0 +1,30 @@
+
+.signlink {
+    display: flex;
+    justify-content: right;
+    gap: 10px;
+    padding-right: 10px;
+  }
+  
+  #login_header {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 30px;
+  }
+  .user {
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+  }
+  
+  .box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  input[type=button] {
+    display: block;
+    margin: 20px auto; 
+  }
+  
