@@ -1,7 +1,7 @@
 from flask import Flask, render_template,session,request,abort,redirect
 from flask_bcrypt import Bcrypt
 from data.models import *
-import os,string,random
+import os
 
 app = Flask(__name__)
 bcrypt = Bcrypt()
@@ -25,7 +25,7 @@ def registration():
     return render_template('registration.html')
 
 
-#will authenticate user if logging in. Not working rn.
+#will authenticate user if logging in.
 @app.route('/auth', methods= ['POST', 'GET'])
 def auth_user():
     username = request.form.get('username')
@@ -39,7 +39,7 @@ def auth_user():
     if not user:
         return redirect('/')
     
-    if bcrypt.check_password_hash(user.password, password):
+    if bcrypt.check_password_hash(user.password_hash, password):
         session['username'] = user.username
 
         return redirect('/end')
@@ -47,15 +47,13 @@ def auth_user():
     return f"<h1>DID NOT Work<h1>"
 
 
-
+#Create account with username and password
 @app.post('/create')
 def create():
     username = request.form.get('username')
     password = request.form.get('password')
 
     user = Users.query.filter_by(username=username).first()
-
-    session.clear() ## will remove after proper login auth is done
 
     sesh_usr = session.get('username') 
     
@@ -64,10 +62,6 @@ def create():
 
     if not username or not password:
         abort(400)
-
-
-    #generate random email, will fix later
-    #email = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(5)) + '@' +''.join(random.choice(string.ascii_letters + string.digits) for _ in range(7))
 
 
     hashed_password = bcrypt.generate_password_hash(password,12).decode('utf-8')
