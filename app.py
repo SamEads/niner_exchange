@@ -27,7 +27,21 @@ def registration():
 
 @app.route('/user')
 def user():
-    return render_template('user.html')
+
+    username = session.get('username')
+    user = Users.query.filter_by(username=username).first()
+
+    if user is None:
+        return render_template('home.html')
+    
+    if username in session.values() and session['username']==username:
+
+        acc_name = user.username
+        class_lv = level(user.class_level)
+        member_since = user.created_at
+        
+
+        return render_template('user.html',acc_name=acc_name,class_lv=class_lv,member_since=member_since)
 
 #will authenticate user if logging in.
 @app.route('/auth', methods= ['POST', 'GET'])
@@ -76,3 +90,17 @@ def create():
     db.session.add(new_user)
     db.session.commit()
     return redirect('/')
+
+
+
+def level(arg: int) -> str:
+
+    match arg: 
+        case 1: 
+            "1st"
+        case 2: 
+            "2nd"
+        case 3:
+            "3rd"
+        case 4:
+            "4th"
