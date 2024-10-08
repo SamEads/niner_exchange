@@ -25,6 +25,10 @@ def registration():
     return render_template('registration.html')
 
 
+@app.route('/user')
+def user():
+    return render_template('user.html')
+
 #will authenticate user if logging in.
 @app.route('/auth', methods= ['POST', 'GET'])
 def auth_user():
