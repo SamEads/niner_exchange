@@ -12,6 +12,7 @@ app.config['SECRET_KEY'] = 'Secure'
 
 db.init_app(app)
 
+
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -23,7 +24,6 @@ def login():
 @app.route('/registration')
 def registration():
     return render_template('registration.html')
-
 
 #will authenticate user if logging in.
 @app.route('/auth', methods= ['POST', 'GET'])

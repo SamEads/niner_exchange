@@ -5,7 +5,7 @@
     gap: 10px;
     padding-right: 10px;
   }
-  
+
   #login_header {
     display: flex;
     justify-content: center;
@@ -16,15 +16,14 @@
     justify-content: center;
     padding: 15px;
   }
-  
+
   .box {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  
+
   input[type=button] {
     display: block;
-    margin: 20px auto; 
+    margin: 20px auto;
   }
-  
