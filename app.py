@@ -25,6 +25,13 @@ def login():
 def registration():
     return render_template('registration.html')
 
+@app.route('/logout')
+def logout():
+
+    session.clear()
+
+    return redirect('/')
+
 @app.route('/user/<username>')
 def user(username):
 
@@ -60,7 +67,7 @@ def auth_user():
     if bcrypt.check_password_hash(user.password_hash, password):
         session['username'] = user.username
 
-        return redirect('/user')
+        return redirect(url_for('user', username = user.username))
     
     return f"<h1>DID NOT Work<h1>"
 
@@ -89,7 +96,6 @@ def create():
     session['username'] = username
     db.session.add(new_user)
     db.session.commit()
-    print(new_user.username)
     return redirect(url_for('user', username = new_user.username))
 
 
