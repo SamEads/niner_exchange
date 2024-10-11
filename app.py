@@ -96,7 +96,6 @@ def create():
 
 
 def level(arg: int) -> str:
-
     match arg: 
         case 1: 
           return  "1st"

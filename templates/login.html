@@ -7,7 +7,7 @@
 <h1 id="login_header">{% block login_text %}Log In{% endblock %}</h1>
 
 
-<form action= {% block action_url %}{% endblock %} method="POST">
+<form action= {% block action_url %}/auth{% endblock %} method="POST">
     <h2 class="user">Username</h2>
     <div class="box">
         <input type="text" id="username" name="username" required>
