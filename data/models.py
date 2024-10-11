@@ -3,6 +3,8 @@ from datetime import date
 db = SQLAlchemy()
 import random,string
 
+
+
 class Users(db.Model):
     __tablename__ = 'users'
 
@@ -35,3 +37,16 @@ class Ratings(db.Model):
 
     def __init__(self, user_id, rater_id, rating):
         self.user_id = user_id
+
+
+    #Get rating based on user ID
+    def get_rating(user_id: int) -> int:
+
+        ratings = Ratings.query.filter_by(user_id = user_id).all()
+
+        if not ratings: 
+            return -1
+
+        actual = int(sum(rating.rating for rating in ratings) / len(ratings))
+
+        return actual

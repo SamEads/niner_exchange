@@ -16,7 +16,15 @@
 </div>
 
 <div class="right">
-    <div class="stars">★★★★★</div>
+    <div class="stars">
+        {% for i in range(1, 6) %}
+            {% if i <= rating %}
+                ★
+            {% else %}
+                ☆
+            {% endif %}
+        {% endfor %}
+    </div>
     <button class="home-button" onclick="window.location.href='home.html'">
         Return to Home
     </button>
