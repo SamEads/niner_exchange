@@ -1,29 +1,49 @@
-
 .signlink {
-    display: flex;
-    justify-content: right;
-    gap: 10px;
-    padding-right: 10px;
-  }
+  display: flex;
+  justify-content: right;
+  gap: 10px;
+  padding-right: 10px;
+}
 
-  #login_header {
-    display: flex;
-    justify-content: center;
-    padding-bottom: 30px;
-  }
-  .user {
-    display: flex;
-    justify-content: center;
-    padding: 15px;
-  }
+#login_header {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 30px;
+}
 
-  .box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.user {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+}
 
-  input[type=button] {
-    display: block;
-    margin: 20px auto;
-  }
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input[type=button] {
+  display: block;
+  margin: 20px auto;
+}
+
+.password-box {
+  position: relative;
+}
+
+.password-box input[type="password"] {
+}
+
+.toggle-password {
+  position: absolute;
+  margin-left: 150px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 2;
+}
+
+.toggle-password i {
+  pointer-events: none;
+}
