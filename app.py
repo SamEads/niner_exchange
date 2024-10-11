@@ -12,6 +12,7 @@ app.config['SECRET_KEY'] = 'Secure'
 
 db.init_app(app)
 
+
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -23,7 +24,6 @@ def login():
 @app.route('/registration')
 def registration():
     return render_template('registration.html')
-
 
 @app.route('/user/<username>')
 def user(username):
@@ -42,8 +42,6 @@ def user(username):
     #can later validadate if this is the users page or another users page will have to 
 
     return render_template('user.html',acc_name=acc_name,class_lv=class_lv,member_since=member_since)
-
-
 
 #will authenticate user if logging in.
 @app.route('/auth', methods= ['POST', 'GET'])

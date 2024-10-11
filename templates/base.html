@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"/>
     <title>{% block title %}{% endblock %}</title>
     {% block head %}{% endblock %}
 </head>
 <body>
+
+<header>
     <h1>
-        Index content 
+        Niner Exchange
     </h1>
-    
-    <div class = "topnav"> 
+ <div class = "topnav"> 
             <a class= "home" href="/">
                 <img width="35" height="35" src="https://img.icons8.com/ios/50/home--v1.png" alt="home--v1"/> 
             </a>
@@ -24,9 +26,16 @@
             <a class = "sign-in" href = "/registration">Register</a> 
             <a  class = "reg"href="/login">Sign In </a>
             {% endif %}
-            
     </div>
+</header>
+
+<main>
     {% block content %}{% endblock %}
     {% block action_url %}{% endblock %}
+</main>
+
+<footer>&copy;2024 Niner Exchange. All rights reserved.</footer>
 </body>
+
+
 </html>
