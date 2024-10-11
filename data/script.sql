@@ -21,13 +21,11 @@ CREATE TABLE Listing (
     FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE
 );
 
-
-
 CREATE TABLE Ratings (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL, -- User who is being rated
     rater_id INT NOT NULL, -- User who gave the rating
-    rating INT CHECK (rating >= 1 AND rating <= 5), -- Assuming a 1-5 rating system
+    rating INT CHECK (rating >= 1 AND rating <= 5), -- 1-5 rating system
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
     FOREIGN KEY (rater_id) REFERENCES Users(id) ON DELETE CASCADE,

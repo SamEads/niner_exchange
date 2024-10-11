@@ -3,8 +3,6 @@ from datetime import date
 db = SQLAlchemy()
 import random,string
 
-
-
 class Users(db.Model):
     __tablename__ = 'users'
 
