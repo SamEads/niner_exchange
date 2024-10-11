@@ -3,11 +3,10 @@
 {% block title %}Log in{% endblock %}
 
 {% block content %}
-<link href="login.css" rel = "stylesheet">
+<link href="login.css" rel="stylesheet">
 <h1 id="login_header">{% block login_text %}Log In{% endblock %}</h1>
 
-
-<form action= {% block action_url %}/auth{% endblock %} method="POST">
+<form action="{% block action_url %}/auth{% endblock %}" method="POST">
     <h2 class="user">Username</h2>
     <div class="box">
         <input type="text" id="username" name="username" required>
@@ -15,12 +14,11 @@
 
     <h2 class="user">Password</h2>
     <div class="box">
-        <input type="text" id="password" name="password" required>
+        <input type="password" id="password" name="password" required>
     </div>
 
     <br>
 
-    <!-- BTW, this will need a block specific for where it GETs/POSTs from so that registration does a diff action... -->
     <button class="post_button">{% block sign_in_text %}Sign In{% endblock %}</button>
 </form>
 
