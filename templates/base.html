@@ -18,9 +18,12 @@
                 <img width="35" height="35" src="https://img.icons8.com/ios/50/home--v1.png" alt="home--v1"/> 
             </a>
             
-            
+            {% if session['username']%}
+            <a class = "sign-in" href = "/logout">Sign Out</a> 
+            {% else %}
             <a class = "sign-in" href = "/registration">Register</a> 
             <a  class = "reg"href="/login">Sign In </a>
+            {% endif %}
             
     </div>
     {% block content %}{% endblock %}

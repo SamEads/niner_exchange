@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import date
 db = SQLAlchemy()
+import random,string
 
 
 
@@ -16,12 +17,14 @@ class Users(db.Model):
     created_at = db.Column(db.DateTime, default=date.today())  # Account creation timestamp
     updated_at = db.Column(db.DateTime, default=date.today(), onupdate=date.today())  # Last update timestamp
 
-    def __init__(self, username, password_hash, first_name, email, class_level):
+    
+    def __init__(self, username, password_hash):
         self.username = username
         self.password_hash = password_hash
-        self.first_name = first_name
-        self.email = email
-        self.class_level = class_level  # Class level (1-4)
+        self.first_name = "Placeholder Name"
+        self.email = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(5)) + '@' +''.join(random.choice(string.ascii_letters + string.digits) for _ in range(5))
+
+        self.class_level = 1
 
 
 class Ratings(db.Model):
