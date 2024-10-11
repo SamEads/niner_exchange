@@ -15,15 +15,17 @@
     <h1>
         Niner Exchange
     </h1>
-    <div class="topnav">
-        <nav>
-            <ul class="nav-links">
-                <li><a href="/"> <img width="35" height="35" src="https://img.icons8.com/ios/50/home--v1.png"
-                                      alt="home--v1"/></a></li>
-                <li class="register"><a href="/registration">Register</a></li>
-                <li class="sign-in"><a href="/login">Sign In </a></li>
-            </ul>
-        </nav>
+ <div class = "topnav"> 
+            <a class= "home" href="/">
+                <img width="35" height="35" src="https://img.icons8.com/ios/50/home--v1.png" alt="home--v1"/> 
+            </a>
+            
+            {% if session['username']%}
+            <a class = "sign-in" href = "/logout">Sign Out</a> 
+            {% else %}
+            <a class = "sign-in" href = "/registration">Register</a> 
+            <a  class = "reg"href="/login">Sign In </a>
+            {% endif %}
     </div>
 </header>
 

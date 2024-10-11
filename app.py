@@ -1,4 +1,4 @@
-from flask import Flask, render_template,session,request,abort,redirect
+from flask import Flask, render_template,session,request,abort,redirect,url_for
 from flask_bcrypt import Bcrypt
 from data.models import *
 import os
@@ -25,6 +25,24 @@ def login():
 def registration():
     return render_template('registration.html')
 
+@app.route('/user/<username>')
+def user(username):
+
+    user = Users.query.filter_by(username=username).first()
+
+    
+    if user is None:
+        return render_template('home.html')
+    
+
+    acc_name = user.username
+    class_lv = level(int(user.class_level))
+    member_since = str(user.created_at)[:4]
+
+    #can later validadate if this is the users page or another users page will have to 
+
+    return render_template('user.html',acc_name=acc_name,class_lv=class_lv,member_since=member_since)
+
 #will authenticate user if logging in.
 @app.route('/auth', methods= ['POST', 'GET'])
 def auth_user():
@@ -42,7 +60,7 @@ def auth_user():
     if bcrypt.check_password_hash(user.password_hash, password):
         session['username'] = user.username
 
-        return redirect('/end')
+        return redirect('/user')
     
     return f"<h1>DID NOT Work<h1>"
 
@@ -57,7 +75,7 @@ def create():
 
     sesh_usr = session.get('username') 
     
-    if user is not None or sesh_usr is not None: # if the user is already in session or exist, ask them to login 
+    if user is not None or sesh_usr == username: # if the user is already in session or exist, ask them to login 
         return redirect('/login')
 
     if not username or not password:
@@ -71,4 +89,20 @@ def create():
     session['username'] = username
     db.session.add(new_user)
     db.session.commit()
-    return redirect('/')
+    print(new_user.username)
+    return redirect(url_for('user', username = new_user.username))
+
+
+
+
+def level(arg: int) -> str:
+
+    match arg: 
+        case 1: 
+          return  "1st"
+        case 2: 
+           return "2nd"
+        case 3:
+          return  "3rd"
+        case 4:
+          return  "4th"
