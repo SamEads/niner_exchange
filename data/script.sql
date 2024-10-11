@@ -4,6 +4,7 @@ CREATE TABLE Users (
     first_name VARCHAR(50) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
+    class_level INT CHECK (class_level >= 1 AND class_level <= 4) NOT NULL, -- Class level (1-4)
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Account creation timestamp
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Last update timestamp
 );
