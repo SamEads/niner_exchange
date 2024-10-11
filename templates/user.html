@@ -1,25 +1,45 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}{{ user }}{% endblock %} {% block
+content %}
+<style>
+	.container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100vh; 
+		position: relative; 
+	}
+	.profile-card {
+		text-align: center; 
+	}
+	.stars {
+		font-size: 24px; /* Size of stars */
+	}
+	.home-button {
+		position: absolute; 
+		bottom: 125px; 
+		right: 100px; 
+	}
+</style>
 
-{% block title %}{{ user }}{% endblock %}
-
-{% block content %}
-<!--<link href="{{url_for('static',filename='user.css')}}" rel="stylesheet">-->
-
-<div class="left">
-    <div class="profile-icon">
-        <img width="24" height="24" src="https://img.icons8.com/material-rounded/24/user.png" alt="user"/>
-    </div>
-    <div class="user-info">
-        <h2>{{acc_name}}</h2>
-        <p>{{class_lv}} year student at UNC Charlotte</p>
-        <p>Member since {{member_since}}</p>
-    </div>
-</div>
-
-<div class="right">
-    <div class="stars">★★★★★</div>
-    <button class="home-button" onclick="window.location.href='home.html'">
-        Return to Home
-    </button>
+<div class="container">
+	<div class="profile-card">
+		<div class="profile-icon">
+			<img
+				width="24"
+				height="24"
+				src="https://img.icons8.com/material-rounded/24/user.png"
+				alt="user"
+			/>
+		</div>
+		<div class="user-info">
+			<h2>{{acc_name}}</h2>
+			<p>{{class_lv}} year student at UNC Charlotte</p>
+			<p>Member since {{member_since}}</p>
+		</div>
+		<div class="stars">★★★★★</div>
+	</div>
+	<button class="home-button" onclick="window.location.href='home.html'">
+		Return to Home
+	</button>
 </div>
 {% endblock %}
