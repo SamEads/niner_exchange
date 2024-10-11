@@ -1,106 +1,139 @@
-.topnav {
-  background-color: white;
-  overflow: hidden;
-  width: 100%;
+header {
+    grid-area: header;
+    background-color: rgb(0, 80, 53);
 }
 
-.topnav .home {
-  margin-left: 2%;
+header h1 {
+    color: white;
+    padding-left: 20px;
 }
 
-.topnav .sign-in {
-  position: absolute;
-  left: 95%;
+body {
+    display: grid;
+    grid-template-rows: 6rem 1fr 3rem;
+    grid-template-columns: 1fr 80% 1fr;
+    grid-template-areas:
+        "header header header"
+        ". body ."
+        "footer footer footer";
+    margin: 0;
+    height: 100vh;
 }
 
-.topnav .reg {
-  position: absolute;
-  left: 90%;
+main {
+    grid-area: body;
 }
 
-.topnav a:hover {
-  background-color: grey;
-
+footer {
+    grid-area: footer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 80, 53);
+    color: white;
 }
 
-.topnav a:active {
-  background-color: white;
+.header nav ul {
+    display: inline;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: right;
+    list-style-type: none;
+    padding-right: 10px;
+    gap: 20px;
+}
+
+.nav-links li:first-child {
+    position: absolute;
+    left: 0;
+    padding-left: 20px;
+}
+
+.register a, .sign-in a{
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    padding-right: 10px;
 }
 
 .button {
-  border: none;
-  background-color: #498f3d;
-  color: rgb(255, 255, 255);
-  padding: 8px 15px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 100%;
-  border-radius: 10px;
+    border: none;
+    background-color: #498f3d;
+    color: rgb(255, 255, 255);
+    padding: 8px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 100%;
+    border-radius: 10px;
 }
 
 .button:hover {
-  background-color: #256d27;
-  transition: 0.3s;
+    background-color: #256d27;
+    transition: 0.3s;
 }
 
 .header_text {
-  text-decoration: underline;
-  text-decoration-color: #595959;
-  color: #595959;
-  max-width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
+    text-decoration: underline;
+    text-decoration-color: #595959;
+    color: #595959;
+    max-width: fit-content;
+    margin: auto;
+    margin-top: 50px;
 }
 
 .center_input {
-  max-width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 3%;
-  display: flex;
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 3%;
+    display: flex;
 }
 
 .right {
-  margin-left: 10%;
+    margin-left: 10%;
 }
 
 .text_box {
-  border-radius: 10px;
-  position: relative;
-  box-sizing: border-box;
-  padding: 5px;
-  width: 15rem;
-  margin-right: 2%;
+    border-radius: 10px;
+    position: relative;
+    box-sizing: border-box;
+    padding: 5px;
+    width: 15rem;
+    margin-right: 2%;
 }
 
 .signlink {
-  display: flex;
-  justify-content: right;
-  gap: 10px;
-  padding-right: 10px;
+    display: flex;
+    justify-content: right;
+    gap: 10px;
+    padding-right: 10px;
 }
 
 #login_header {
-  display: flex;
-  justify-content: center;
-  padding-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 30px;
+    padding-top: 30px;
 }
 
 .user {
-  display: flex;
-  justify-content: center;
-  padding: 15px;
+    display: flex;
+    justify-content: center;
+    padding: 15px;
 }
 
 .box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /*Temp change to text signup*/
 .post_button {
-  display: block;
-  margin: 20px auto;
+    display: block;
+    margin: 20px auto;
 }
+
