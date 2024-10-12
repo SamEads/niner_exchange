@@ -8,7 +8,8 @@ app = Flask(__name__)
 app.config.from_object(Config)
 bcrypt = Bcrypt(app)
 
-db.init_app(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://username:password@localhost/dbname'
+
 
 with app.app_context():
     register_blueprints(app)
