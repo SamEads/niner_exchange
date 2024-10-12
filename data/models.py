@@ -1,9 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
-from datetime import date
+from datetime import date, datetime
 db = SQLAlchemy()
 import random,string
-
-
 
 class Users(db.Model):
     __tablename__ = 'users'
@@ -26,6 +24,13 @@ class Users(db.Model):
 
         self.class_level = 1
 
+class Messages(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    sender = db.Column(db.String(255), nullable=False)
+    recipient = db.Column(db.String(255), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.now())
+    edited = db.Column(db.Boolean, default=False)
 
 class Ratings(db.Model):
 

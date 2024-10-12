@@ -31,3 +31,12 @@ CREATE TABLE Ratings (
     FOREIGN KEY (rater_id) REFERENCES Users(id) ON DELETE CASCADE,
     UNIQUE (user_id, rater_id) -- Prevents the same user from rating another user multiple times
 );
+
+CREATE TABLE Messages (
+    id SERIAL PRIMARY KEY,
+    sender VARCHAR(255) NOT NULL,
+    recipient VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    edited BOOLEAN DEFAULT FALSE,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='messaging.css') }}" />
+{% endblock %}
+{% block content %}
+<div class="message-container">
+    <h1>Messages with {{ recipient }}</h1>
+    <div class="message-history" id="message-history">
+        {% for message in messages %}
+            <div class="message" data-message-id="{{ message.id }}">
+                <div class="message-header">
+                    <strong>{{ message.sender }}</strong> 
+                    <span class="timestamp">{{ message.timestamp|format_timestamp }}{% if message.edited %} (edited){% endif %}</span>
+                    <!--
+                    <span class="timestamp">{{ message.timestamp|format_timestamp }}{% if message.edited %} (edited){% endif %}</span>
+                    {% if message.sender == session['username'] %}
+                        <button class="edit-button" onclick="editMessage({{ message.id }})">Edit</button>
+                    {% endif %}-->
+                </div>
+                <div class="message-content">
+                    {{ message.content }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <form class="send-message-form" action="/send-message" method="POST" id="send-message-form">
+        <input type="hidden" name="recipient" value="{{ recipient }}">
+        <div class="form-group">
+            <div class="textarea-container">
+                <textarea id="message" name="message" class="form-control" rows="1" placeholder="Type your message here..." maxlength="1000" required></textarea>
+                <div id="char-count" style="visibility: hidden;">0/1000</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+    </form>
+</div>
+<script>
+    window.onload = function() {
+        var messageHistory = document.getElementById('message-history');
+        messageHistory.scrollTop = messageHistory.scrollHeight;
+    };
+
+    document.getElementById('message').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            document.getElementById('send-message-form').submit();
+        }
+    });
+
+    document.getElementById('message').addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+
+        // Update character count and color
+        var charCount = this.value.length;
+        var charCountElement = document.getElementById('char-count');
+        charCountElement.innerText = charCount + '/1000';
+        if (charCount >= 100) {
+            charCountElement.style.visibility = 'visible';
+        } else {
+            charCountElement.style.visibility = 'hidden';
+        }
+        if (charCount >= 950) {
+            charCountElement.style.color = 'rgb(255, 100, 100)';
+        } else {
+            charCountElement.style.color = 'rgb(100, 100, 100)';
+        }
+    });
+
+    function editMessage(messageId) {
+        var messageElement = document.querySelector(`.message[data-message-id='${messageId}'] .message-content`);
+        var originalContent = messageElement.innerText;
+        var editTextarea = document.createElement('textarea');
+        editTextarea.className = 'form-control';
+        editTextarea.rows = 1;
+        editTextarea.maxLength = 1000;
+        editTextarea.value = originalContent;
+        messageElement.innerHTML = '';
+        messageElement.appendChild(editTextarea);
+
+        var saveButton = document.createElement('button');
+        saveButton.className = 'btn btn-primary';
+        saveButton.innerText = 'Save';
+        saveButton.onclick = function() {
+            var newContent = editTextarea.value;
+            if (newContent.length > 1000) {
+                alert('Message cannot exceed 1000 characters.');
+                return;
+            }
+            var formData = new FormData();
+            formData.append('message', newContent);
+            fetch(`/edit-message/${messageId}`, {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert('Failed to edit message.');
+                }
+            });
+        };
+        messageElement.appendChild(saveButton);
+    }
+</script>
+{% endblock %}
