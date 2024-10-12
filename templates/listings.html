@@ -1,0 +1,19 @@
+{% extends "base.html" %} 
+
+{% block title %}Listings{% endblock %}  <!-- page title -->
+
+{% block content %}
+    <div class="header_text">
+        <h2>Listings for "{{ query }}"</h2>  <!-- Display the query for which listings are shown -->
+    </div>
+    
+    <div class="listings" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 20px; padding: 20px;">
+        
+        {% for _ in range(12) %}  
+            <div class="listing-box" style="border: 2px solid #000000; border-radius: 5px; padding: 20px; height: 150px; text-align: center; background-color: #f9f9f9;">
+                <!-- Individual listing box with a black border, rounded corners, padding, and a light gray background -->
+                <p style="font-weight: bold;">Item {{ loop.index }}</p>  <!-- displays box # -->
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

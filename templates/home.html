@@ -1,26 +1,26 @@
-{% extends "base.html" %}
+{% extends "base.html" %} 
 
-{% block title %}Home{% endblock %}
+{% block title %}Home{% endblock %}  <!-- page title -->
 
 {% block content %}
-
-    <div class = "header_text">
-        <h2>Niner Exchange</h2>
+    <div class="header_text">
+        <h2>Niner Exchange</h2>  <!-- heading -->
     </div>
-    {% if session['username'] %}
-    <div class = "right">
-        <button class="button"> Create Listing! </button>
-    </div>
-    {% else %}
-    <div class="right">
-
-    </div>
-    {% endif %}
-
-    <div class="center_input">
-        <input class="text_box"></input>
-        <button class="button">Search!</button>
-    </div>
-
     
+    <div class="center_input" style="text-align: center; margin-top: 10px;">
+        {% if session['username'] %}  
+            <div class="right">
+                <button class="button">Create Listing!</button>  <!-- create listing button -->
+            </div>
+        {% else %}
+            <div class="right"></div> 
+        {% endif %}
+
+        <form action="{{ url_for('user.search') }}" method="post" style="display: inline-block; margin-top: 5px;">
+            <!-- Form for searching, submits to the 'user.search' route using POST method -->
+            <input class="text_box" name="search_query" placeholder="Search..." style="padding: 10px; width: 290px; margin-right: 5px; margin-left: -10px;">
+            <!-- Input box for search query -->
+            <button class="button" type="submit">Search!</button>  <!-- search button -->
+        </form>
+    </div>
 {% endblock %}
