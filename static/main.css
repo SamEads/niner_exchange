@@ -33,6 +33,10 @@ footer {
     color: white;
 }
 
+.welcome-message {
+    color: white;
+}
+
 .header nav ul {
     display: inline;
 }
@@ -40,6 +44,7 @@ footer {
 .nav-links {
     display: flex;
     justify-content: right;
+    align-items: center;
     list-style-type: none;
     padding-right: 10px;
     gap: 20px;

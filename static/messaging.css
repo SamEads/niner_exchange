@@ -1,0 +1,77 @@
+.message-container {
+    display: flex;
+    flex-direction: column;
+    height: 82vh;
+}
+
+.message-history {
+    flex-grow: 1;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.message {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #b9b9b9;
+}
+
+.message-header {
+    font-size: 0.9em;
+    color: #555;
+}
+
+.timestamp {
+    font-size: 0.8em;
+    color: #999;
+    margin-left: 5px;
+}
+
+.message-content {
+    margin-top: 5px;
+    font-size: 1em;
+    overflow-wrap: break-word;
+}
+
+.send-message-form {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    background: white;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+}
+
+.send-message-form .form-group {
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    position: relative;
+}
+
+.textarea-container {
+    position: relative;
+    width: 100%;
+    margin-right: 10px;
+}
+
+.send-message-form textarea {
+    resize: none;
+    margin-bottom: 0;
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding-right: 80px;
+}
+
+#char-count {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 0.9em;
+}
