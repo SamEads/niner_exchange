@@ -20,9 +20,12 @@
         <div class="topnav">
             <nav>
                 <ul class="nav-links">
-                    <li><a href="/"> <img width="35" height="35" src="https://img.icons8.com/ios/50/home--v1.png" alt="home--v1" /></a></li>
+                    <li><a href="/"> <img width="35" height="35" src="https://img.icons8.com/ios/50/ffffff/home--v1.png" alt="home--v1" /></a></li>
                     {% if session['username'] %}
                     <li class="welcome-message">Welcome, {{ session['username'] }}</li>
+                    <li class="sign-in"><a href="{{ url_for('user.user', username=session['username']) }}">Account</a></li>
+                    <li class="sign-in"><a href="/inbox">Inbox</a></li>
+                    <li class="sign-in"><a href="/">My Listings</a></li>
                     <li class="sign-in"><a href="/logout">Sign Out</a></li>
                     {% else %}
                     <li class="register"><a href="/registration">Register</a></li>

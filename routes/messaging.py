@@ -11,6 +11,11 @@ def view_messages(recipient):
     if not sender:
         flash('You need to be logged in to view messages.')
         return redirect(url_for('auth.login'))
+    
+    recipient_user = Users.query.filter_by(username=recipient).first()
+    if not recipient_user:
+        flash('Recipient does not exist')
+        return redirect('/inbox')
 
     messages = Messages.query.filter(
         (Messages.sender == sender) & (Messages.recipient == recipient) |

@@ -1,6 +1,7 @@
 header {
     grid-area: header;
     background-color: rgb(0, 80, 53);
+    border-bottom: 4px solid rgb(189, 157, 76);
 }
 
 header h1 {
@@ -29,7 +30,8 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(0, 80, 53);
+    background-color: rgb(12, 19, 31);
+    border-top: 4px solid rgb(189, 157, 76);
     color: white;
 }
 
