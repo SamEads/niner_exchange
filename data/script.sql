@@ -10,7 +10,7 @@ CREATE TABLE Users (
 );
 
 
-CREATE TABLE Listing (
+CREATE TABLE Listings (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     title VARCHAR(255) NOT NULL,

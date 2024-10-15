@@ -56,7 +56,7 @@ footer {
     padding-left: 20px;
 }
 
-.register a, .sign-in a{
+.register a, .sign-in a, .listing a{
     color: white;
     text-decoration: none;
     font-size: 20px;
