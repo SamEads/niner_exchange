@@ -22,6 +22,7 @@ def createListing():
         return abort(400, description="Invalid data provided")
     if not user_id:
         return abort(400, description="You must be logged in to create a post")
+
     new_listing = Listing(
         user_id = user_id,
         title = title,

@@ -70,4 +70,4 @@ def create():
     db.session.commit()             # Commit changes to database
     
     # Redirect
-    return redirect(url_for('user.user', username=new_user.username))
+    return redirect('/login')
