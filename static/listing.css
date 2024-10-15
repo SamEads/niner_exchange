@@ -1,3 +1,10 @@
-h1 {
-    border: solid black 10px;
+.listing-header {
+    padding-top: 30px;
 }
+.listing-form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 300px;
+}
+

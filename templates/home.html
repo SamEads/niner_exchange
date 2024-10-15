@@ -4,23 +4,14 @@
 
 {% block content %}
 
-    <div class = "header_text">
-        <h2>Niner Exchange</h2>
-    </div>
-    {% if session['username'] %}
-    <div class = "right">
-        <button class="button"> Create Listing! </button>
-    </div>
-    {% else %}
-    <div class="right">
+<div class="header_text">
+    <h2>Niner Exchange</h2>
+</div>
 
-    </div>
-    {% endif %}
 
-    <div class="center_input">
-        <input class="text_box"></input>
-        <button class="button">Search!</button>
-    </div>
+<div class="center_input">
+    <input class="text_box"></input>
+    <button class="button">Search!</button>
+</div>
 
-    
 {% endblock %}

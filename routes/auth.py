@@ -36,10 +36,11 @@ def auth_user():
 
     # Redirect if user does not exist
     if not user:
-        return redirect('/')
+        return "<h1>DID NOT Work<h1>"
 
     if bcrypt.check_password_hash(user.password_hash, password):
         session['username'] = user.username
+        session['user_id'] = user.id
         return redirect(url_for('user.user', username=user.username))
 
     return "<h1>DID NOT Work<h1>"
@@ -52,7 +53,6 @@ def create():
 
     user = Users.query.filter_by(username=username).first()
     sesh_usr = session.get('username')
-
     # Check if user already exists or if session username matches the provided username
     if user is not None or sesh_usr == username:
         return redirect('/login')
@@ -70,4 +70,4 @@ def create():
     db.session.commit()             # Commit changes to database
     
     # Redirect
-    return redirect(url_for('user.user', username=new_user.username))
+    return redirect('/login')
