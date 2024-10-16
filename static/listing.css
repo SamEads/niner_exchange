@@ -8,12 +8,6 @@
     width: 300px;
 }
 
-.create_listing a, .view_all_listings a{
-    color: white;
-    font-size: 20px;
-    padding-right: 10px;
-}
-
 .all_listings {
     display: flex;
     justify-content: center;
@@ -25,7 +19,6 @@
     gap: 16px;
     justify-content: left;
     padding-bottom: 20px;
-
 }
 
 .listing-item {

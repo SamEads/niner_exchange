@@ -1,50 +1,7 @@
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    height: 100vh;
-    margin: 0;
+.user-profile {
+    padding: 20px 0;
 }
-.left {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #f0f0f0;
-}
-.profile-icon {
-    width: 100px;
-    height: 100px;
-    background-color: #ccc; /* Placeholder for profile icon */
-    border-radius: 50%;
-    margin-bottom: 20px;
-}
-.user-info {
-    text-align: center;
-}
-.right {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #ffffff;
-}
-.stars {
-    font-size: 24px;
-    margin-bottom: 20px;
 
-}
-.home-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-.home-button:hover {
-    background-color: #0056b3;
+.stars {
+    transform: translateY(-15px);
 }

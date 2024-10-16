@@ -7,11 +7,11 @@
 {% block content %}
 <div class="single-listing">
     <h1>Title: {{ listing.title }}</h1>
-    <p>Description: {{ listing.description }}</p>
-    <p>Price: ${{ listing.price }}</p>
-    <p>Created By: {{ listing.user.username }}</p>
-    <p>Date Posted: {{ listing.created_at.strftime('%m-%d-%Y') }}</p>
-    <p>Time Posted: {{ listing.created_at.strftime('%I:%M %p') }}</p>
+    <p><b>Description: </b>{{ listing.description }}</p>
+    <p><b>Price: </b>${{ listing.price }}</p>
+    <p><b>Created By: </b>{{ listing.user.username }}</p>
+    <p><b>Date Posted: </b>{{ listing.created_at.strftime('%m-%d-%Y') }}</p>
+    <p><b>Time Posted: </b>{{ listing.created_at.strftime('%I:%M %p') }}</p>
 
     <img src="{{ url_for('listing.get_image', listing_id=listing.id) }}" alt="{{ listing.name }}"
          style="width: 400px; height: auto;">

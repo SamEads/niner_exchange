@@ -10,9 +10,9 @@
 <div class="listing-grid">
     {% for listing in listings %}
     <div class="listing-item">
-        <h2>{{ listing.title }}</h2>
-        <p>{{ listing.description }}</p>
-        <p>Price: ${{ listing.price }}</p>
+        <h2>Title: {{ listing.title }}</h2>
+        <p><b>Description: </b>{{ listing.description }}</p>
+        <p><b>Price: </b>${{ listing.price }}</p>
         <a href="{{ url_for('listing.get_listing', listing_id=listing.id) }}">
             <img src="{{ url_for('listing.get_image', listing_id=listing.id) }}" alt="{{ listing.name }}"
                  style="width: 400px;">
