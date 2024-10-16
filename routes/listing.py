@@ -43,6 +43,7 @@ def createListing():
     db.session.commit()
     return redirect(url_for('listing.get_listing', listing_id=new_listing.id))
 
+# routes to a completed listing
 @listing_bp.route('/listing/<int:listing_id>')
 def get_listing(listing_id):
     listing = Listing.query.filter_by(id=listing_id).first()
@@ -50,6 +51,7 @@ def get_listing(listing_id):
         return abort(404, description="Listing not found")
     return render_template('view_listing.html', listing=listing)
 
+# routes to the image
 @listing_bp.route('/listing/<int:listing_id>/image')
 def get_image(listing_id):
     listing = Listing.query.filter_by(id=listing_id).first()
@@ -58,3 +60,9 @@ def get_image(listing_id):
         200,
         {'Content-Type': listing.mimetype}
     )
+
+# routes to show all listings displayed in a grid
+@listing_bp.route('/listings')
+def list_all_listings():
+    all_listings = Listing.query.all()
+    return render_template('list_all_listings.html', listings=all_listings)

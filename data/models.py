@@ -69,3 +69,5 @@ class Listing(db.Model):
     mimetype = db.Column(db.Text, nullable =False)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
+
+    user = db.relationship('Users', backref='listings')

@@ -56,7 +56,7 @@ footer {
     padding-left: 20px;
 }
 
-.register a, .sign-in a, .listing a, .welcome-message {
+.register a, .sign-out a, .sign-in a, .listing a, .welcome-message, .create_listing a, .view_all_listings a, .profile a{
     color: white;
     text-decoration: none;
     font-size: 20px;
