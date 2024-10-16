@@ -82,11 +82,11 @@ def list_query():
     print(res)
 
     if not res:
-        return jsonify([])
+        return None
     
     
     #json to display the search query
-    return jsonify([listing.to_dict() for listing in res])
+    return render_template('list_all_listings.html', listings=res)
 
 # routes to show all listings displayed in a grid
 @listing_bp.route('/listings')
