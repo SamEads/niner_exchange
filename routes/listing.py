@@ -58,3 +58,26 @@ def get_image(listing_id):
         200,
         {'Content-Type': listing.mimetype}
     )
+
+
+@listing_bp.route("search")
+def list_query():
+
+    query = request.args.get('query', "").strip()
+
+    if not query or query == '':
+        return abort(400,description ="Invalid query")
+    
+
+    res = Listing.query.filter(
+        (Listing.title.ilike(f"%{query}%"))
+        (Listing.description.ilike(f"%{query}%"))
+    ).all()
+
+    if not res:
+        return {[]}
+    
+    
+
+    return res
+
