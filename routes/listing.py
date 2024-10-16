@@ -61,8 +61,8 @@ def get_image(listing_id):
         {'Content-Type': listing.mimetype}
     )
 
+# routes to show all listings displayed in a grid
 @listing_bp.route('/listings')
 def list_all_listings():
     all_listings = Listing.query.all()
-
     return render_template('list_all_listings.html', listings=all_listings)
