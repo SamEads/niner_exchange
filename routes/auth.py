@@ -40,7 +40,7 @@ def auth_user():
 
     if bcrypt.check_password_hash(user.password_hash, password):
         session['username'] = user.username
-        session['user_id'] = user.id
+        session['user_id'] = user.id     # needs user.id to create listings
         return redirect(url_for('user.user', username=user.username))
 
     return "<h1>DID NOT Work<h1>"

@@ -8,3 +8,12 @@
     width: 300px;
 }
 
+.listing-image {
+    width: 400px;
+}
+
+.create_new_listing {
+    display: flex;
+    padding-top: 10px;
+}
+
