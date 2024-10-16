@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='listing.css') }}" />
+{% endblock %}
+
+{% block content %}
+<h1 class="all_listings">All Listings</h1>
+
+<div class="listing-grid">
+    {% for listing in listings %}
+    <div class="listing-item">
+        <h2>{{ listing.title }}</h2>
+        <p>{{ listing.description }}</p>
+        <p>Price: ${{ listing.price }}</p>
+        <a href="{{ url_for('listing.get_listing', listing_id=listing.id) }}">
+            <img src="{{ url_for('listing.get_image', listing_id=listing.id) }}" alt="{{ listing.name }}"
+                 style="width: 400px;">
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
