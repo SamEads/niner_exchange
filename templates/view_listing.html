@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='listing.css') }}" />
+{% endblock %}
+
+{% block content %}
+<h1>{{ listing.title }}</h1>
+<p>{{ listing.description }}</p>
+<p>Price: ${{ listing.price }}</p>
+<img src="{{ url_for('listing.get_image', listing_id=listing.id) }}" alt="{{ listing.name }}" style="width: 400px;">
+<a class=create_new_listing href="{{ url_for('listing.listing') }}">Create another listing</a>
+{% endblock %}
