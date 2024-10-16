@@ -70,4 +70,19 @@ class Listing(db.Model):
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
+
     user = db.relationship('Users', backref='listings')
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'title': self.title,
+            'description': self.description,
+            'price': str(self.price),  # Convert Decimal to string for JSON serialization
+            'img': self.img.decode('utf-8') if isinstance(self.img, bytes) else self.img,
+            'name': self.name,
+            'mimetype': self.mimetype,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None,
+        }

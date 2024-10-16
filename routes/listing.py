@@ -1,4 +1,4 @@
-from flask import Blueprint, request, session, redirect, abort, render_template, url_for
+from flask import Blueprint, request, session, redirect, abort, render_template, url_for,jsonify,Response
 from flask_bcrypt import Bcrypt
 from data.models import Users, Listing, db
 from werkzeug.utils import secure_filename
@@ -60,6 +60,33 @@ def get_image(listing_id):
         200,
         {'Content-Type': listing.mimetype}
     )
+
+
+@listing_bp.route("/search",methods=["POST","GET"])
+def list_query():
+
+    query = request.form.get('query')
+
+    print(query)
+
+    if not query:
+
+        return abort(400,description ="Invalid query")
+    
+
+    res = Listing.query.filter(
+        (Listing.title.ilike(f"%{query}%")) |
+        (Listing.description.ilike(f"%{query}%"))
+    ).limit(10) #can paginate later
+
+    print(res)
+
+    if not res:
+        return None
+    
+    
+    #json to display the search query
+    return render_template('list_all_listings.html', listings=res)
 
 # routes to show all listings displayed in a grid
 @listing_bp.route('/listings')
