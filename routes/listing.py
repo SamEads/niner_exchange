@@ -85,7 +85,7 @@ def list_query():
         return jsonify([])
     
     
-
+    #json to display the search query
     return jsonify([listing.to_dict() for listing in res])
 
 # routes to show all listings displayed in a grid
