@@ -71,7 +71,8 @@ class Listing(db.Model):
     updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
 
-
+    user = db.relationship('Users', backref='listings')
+    
     def to_dict(self):
         return {
             'id': self.id,
