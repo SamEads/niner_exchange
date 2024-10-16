@@ -1,4 +1,4 @@
-from flask import Blueprint, request, session, redirect, abort, render_template, url_for
+from flask import Blueprint, request, session, redirect, abort, render_template, url_for,jsonify,Response
 from flask_bcrypt import Bcrypt
 from data.models import Users, Listing, db
 from werkzeug.utils import secure_filename
@@ -60,24 +60,29 @@ def get_image(listing_id):
     )
 
 
-@listing_bp.route("search")
+@listing_bp.route("/search",methods=["POST","GET"])
 def list_query():
 
-    query = request.args.get('query', "").strip()
+    query = request.form.get('query')
 
-    if not query or query == '':
+    print(query)
+
+    if not query:
+
         return abort(400,description ="Invalid query")
     
 
     res = Listing.query.filter(
-        (Listing.title.ilike(f"%{query}%"))
+        (Listing.title.ilike(f"%{query}%")) |
         (Listing.description.ilike(f"%{query}%"))
-    ).all()
+    ).limit(10) #can paginate later
+
+    print(res)
 
     if not res:
-        return {[]}
+        return jsonify([])
     
     
 
-    return res
+    return jsonify([listing.to_dict() for listing in res])
 

@@ -8,10 +8,11 @@
     <h2>Niner Exchange</h2>
 </div>
 
-
 <div class="center_input">
-    <input class="text_box"></input>
-    <button class="button">Search!</button>
+    <form action="/search" method="POST"> 
+        <input type="text_box" class="text_box" name="query" id="query" required> 
+        <button class="button" type="submit">Search!</button>
+    </form>
 </div>
 
 {% endblock %}
