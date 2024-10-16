@@ -69,17 +69,3 @@ class Listing(db.Model):
     mimetype = db.Column(db.Text, nullable =False)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
-
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'user_id': self.user_id,
-            'title': self.title,
-            'description': self.description,
-            'price': str(self.price),  
-            'img': self.img.decode('utf-8'),  
-            'name': self.name,
-            'mimetype': self.mimetype,
-            'created_at': self.created_at.isoformat(),
-            'updated_at': self.updated_at.isoformat(),
-        }
