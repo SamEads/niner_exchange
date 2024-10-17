@@ -9,13 +9,13 @@
 {% block content %}
 
 <div class="user-profile">
-    <div class="profile-icon">
+    <div class="profile-icon" onclick="document.getElementById('profile').click();">
         <img width="24" height="24" src="https://img.icons8.com/material-rounded/24/user.png" alt="user"/>
     </div>
     <div class="user-info">
-        <h2>{{acc_name}}</h2>
-        <p>{{class_lv}} year student at UNC Charlotte</p>
-        <p>Member since {{member_since}}</p>
+        <h2>{{ acc_name }}</h2>
+        <p>{{ class_lv }} year student at UNC Charlotte</p>
+        <p>Member since {{ member_since }}</p>
     </div>
 </div>
 
@@ -35,5 +35,9 @@
     </button>
 </div>
 
+<form action="/upload" method="POST" enctype="multipart/form-data">
+    <label for="profile" style="display: none;">Profile Picture:</label>
+    <input type="file" name="profile" id="profile" accept="image/*">
+</form>
 
 {% endblock %}

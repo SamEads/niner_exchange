@@ -1,4 +1,4 @@
-from flask import Blueprint, request, session, redirect, abort, render_template, url_for
+from flask import Blueprint, request, flash, session, redirect, abort, render_template, url_for
 from flask_bcrypt import Bcrypt
 from data.models import Users, db
 
@@ -30,20 +30,22 @@ def auth_user():
 
     # Check if username and password are provided
     if (not username and not password) or (username == '' and password == ''):
-        abort(404) # (Abort with 404 error if username or password is not provided)
-
+        flash("Username and password are required.", "error")  # Flash message
+        return redirect('/login')
     user = Users.query.filter_by(username=username).first()
 
     # Redirect if user does not exist
     if not user:
-        return "<h1>DID NOT Work<h1>"
+        flash("Invalid username or password. Please try again")  # Flash message
+        return redirect('/login')
 
     if bcrypt.check_password_hash(user.password_hash, password):
         session['username'] = user.username
         session['user_id'] = user.id     # needs user.id to create listings
         return redirect(url_for('user.user', username=user.username))
 
-    return "<h1>DID NOT Work<h1>"
+    flash("Invalid username or password. Please try again")  # Flash message
+    return redirect('/login')
 
 # Handle user registration
 @auth_bp.post('/create')
@@ -55,6 +57,7 @@ def create():
     sesh_usr = session.get('username')
     # Check if user already exists or if session username matches the provided username
     if user is not None or sesh_usr == username:
+        flash("Your account already exist. Please log in.", "error")  # Flash message
         return redirect('/login')
 
     # Check if username and password are provided
@@ -70,4 +73,5 @@ def create():
     db.session.commit()             # Commit changes to database
     
     # Redirect
+    flash("Registration successful! Please log in.")
     return redirect('/login')
