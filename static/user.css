@@ -5,3 +5,12 @@
 .stars {
     transform: translateY(-15px);
 }
+
+#profile {
+    display: none;
+}
+
+.profile-icon {
+    cursor: pointer;
+}
+

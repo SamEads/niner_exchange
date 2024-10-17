@@ -15,7 +15,6 @@
 
     <img src="{{ url_for('listing.get_image', listing_id=listing.id) }}" alt="{{ listing.name }}"
          style="width: 400px; height: auto;">
-    <a class=create_new_listing href="{{ url_for('listing.listing') }}">Create another listing</a>
     <a class="send_message_link" href="{{ url_for('messaging.view_messages', recipient=listing.user.username) }}">Send Message to {{ listing.user.username }}</a>
 
 </div>
