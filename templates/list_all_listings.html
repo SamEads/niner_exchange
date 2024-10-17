@@ -6,7 +6,14 @@
 
 {% block content %}
 <h1 class="all_listings">All Listings</h1>
+<form>
+    <span>
+    <input type="radio" id = "title" value ="title"> title 
+    <br>
+    <input type="radio" id = "price" value ="price"> price 
+    </span>
 
+</form>
 <div class="listing-grid">
     {% for listing in listings %}
     <div class="listing-item">
