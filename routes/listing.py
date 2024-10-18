@@ -98,12 +98,14 @@ def list_all_listings():
 
 
 
-@listing_bp.route('/sort_listing')
-def sorted_listing(critera: str, order='asc') -> redirect:
+@listing_bp.route('/sort_listing',methods = ['POST'])
+def sorted_listing() -> render_template:
 
     query = session.get('curr_query')
+    critera = request.form.get('criteria')
+    order = request.form.get('order','asc')
 
-    if not query:
+    if query:
         res = Listing.query.filter(
             (Listing.title.ilike(f"%{query}%")) |
             (Listing.description.ilike(f"%{query}%"))
@@ -111,21 +113,25 @@ def sorted_listing(critera: str, order='asc') -> redirect:
     else: 
         res = Listing.query.limit(10).all()
 
-
+    
     sort_map = {
-        'title': Listing.title,
-        'price': Listing.price,
-        'created_at': Listing.created_at,
+        'title': 'title',
+        'price': 'price',
+        'created_at': 'created_at',
     }
      
     col = sort_map.get(critera)
-
+    print(critera)
+    print(col)
     if order =="asc":
-        return Listing.to_dict(res.order_by(asc(col)))
+        res = sorted(res, key=lambda x: getattr(x, str(col)))
     elif order == "desc":
-        return Listing.to_dict(res.order_by(desc(col)))
+        res = sorted(res, key=lambda x: getattr(x, str(col)), reverse=True)
     else:
-        return None
+        return -1
+    
+
+    return render_template('list_all_listings.html', listings = res)
      
 
 
