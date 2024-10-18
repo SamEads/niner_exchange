@@ -68,8 +68,6 @@ def list_query():
     query = request.form.get('query')
     session["curr_query"] = query
 
-    print(query)
-
     if not query:
 
         return abort(400,description ="Invalid query")
@@ -79,8 +77,6 @@ def list_query():
         (Listing.title.ilike(f"%{query}%")) |
         (Listing.description.ilike(f"%{query}%"))
     ).limit(10) #can paginate later
-
-    print(res)
 
     if not res:
         return None
@@ -92,6 +88,7 @@ def list_query():
 # routes to show all listings displayed in a grid
 @listing_bp.route('/listings')
 def list_all_listings():
+    session.pop('curr_query')
     all_listings = Listing.query.all()
     return render_template('list_all_listings.html', listings=all_listings)
 
@@ -121,8 +118,7 @@ def sorted_listing() -> render_template:
     }
      
     col = sort_map.get(critera)
-    print(critera)
-    print(col)
+  
     if order =="asc":
         res = sorted(res, key=lambda x: getattr(x, str(col)))
     elif order == "desc":
