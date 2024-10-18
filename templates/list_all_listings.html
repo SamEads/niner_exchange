@@ -6,6 +6,23 @@
 
 {% block content %}
 <h1 class="all_listings">All Listings</h1>
+<form action="/sort_listing" method="POST">
+    <div>
+    <span>
+        <input type="radio" name="criteria" id="title" value="title" required> Title 
+        <br>
+        <input type="radio" name="criteria" id="price" value="price"> Price 
+    </span>
+    </div>
+    <div>
+    <span>
+        <input type="radio" name="order" id="asc" value="asc"> Ascending
+        <br>
+        <input type="radio" name="order" id="desc" value="desc"> Descending
+    </span>
+    </div>
+    <input type="submit" value="Sort">
+</form>
 
 <div class="listing-grid">
     {% for listing in listings %}
