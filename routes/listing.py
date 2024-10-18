@@ -88,7 +88,9 @@ def list_query():
 # routes to show all listings displayed in a grid
 @listing_bp.route('/listings')
 def list_all_listings():
-    session.pop('curr_query')
+    if session.get('curr_query'):
+        session.pop('curr_query')
+
     all_listings = Listing.query.all()
     return render_template('list_all_listings.html', listings=all_listings)
 
