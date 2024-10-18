@@ -66,6 +66,7 @@ def get_image(listing_id):
 def list_query():
 
     query = request.form.get('query')
+    session["curr_query"] = query
 
     print(query)
 
@@ -93,3 +94,49 @@ def list_query():
 def list_all_listings():
     all_listings = Listing.query.all()
     return render_template('list_all_listings.html', listings=all_listings)
+
+
+
+
+@listing_bp.route('/sort_listing',methods = ['POST'])
+def sorted_listing() -> render_template:
+
+    query = session.get('curr_query')
+    critera = request.form.get('criteria')
+    order = request.form.get('order','asc')
+
+    if query:
+        res = Listing.query.filter(
+            (Listing.title.ilike(f"%{query}%")) |
+            (Listing.description.ilike(f"%{query}%"))
+            ).limit(10) #can paginate later
+    else: 
+        res = Listing.query.limit(10).all()
+
+    
+    sort_map = {
+        'title': 'title',
+        'price': 'price',
+        'created_at': 'created_at',
+    }
+     
+    col = sort_map.get(critera)
+    print(critera)
+    print(col)
+    if order =="asc":
+        res = sorted(res, key=lambda x: getattr(x, str(col)))
+    elif order == "desc":
+        res = sorted(res, key=lambda x: getattr(x, str(col)), reverse=True)
+    else:
+        return -1
+    
+
+    return render_template('list_all_listings.html', listings = res)
+     
+
+
+
+
+
+
+
