@@ -31,7 +31,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(to bottom, rgb(36, 48, 71), rgb(22, 35, 57));
+    background: linear-gradient(to bottom, rgb(34, 44, 63), rgb(10, 23, 44));
     border-top: 4px solid rgb(189, 157, 76);
     color: white;
 }
