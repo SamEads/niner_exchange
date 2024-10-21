@@ -36,8 +36,8 @@
 </div>
 
 <div>
-    <form action="/delete" method="POST">
-        <button class="Alert" type="submit">
+    <form action="/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete your account?');">
+        <button class="btn btn-danger" type="submit">
             Delete Account
         </button>
     </form>
