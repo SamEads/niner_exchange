@@ -8,18 +8,18 @@
 <h1 class="all_listings">All Listings</h1>
 <form action="/sort_listing" method="POST">
     <div>
-    <span>
-        <input type="radio" name="criteria" id="title" value="title" required> Title 
-        <br>
-        <input type="radio" name="criteria" id="price" value="price"> Price 
-    </span>
+        <span>
+            <input type="radio" name="criteria" id="title" value="title" required> Title
+            <br>
+            <input type="radio" name="criteria" id="price" value="price"> Price
+        </span>
     </div>
     <div>
-    <span>
-        <input type="radio" name="order" id="asc" value="asc"> Ascending
-        <br>
-        <input type="radio" name="order" id="desc" value="desc"> Descending
-    </span>
+        <span>
+            <input type="radio" name="order" id="asc" value="asc"> Ascending
+            <br>
+            <input type="radio" name="order" id="desc" value="desc"> Descending
+        </span>
     </div>
     <input type="submit" value="Sort">
 </form>
@@ -31,8 +31,7 @@
         <p><b>Description: </b>{{ listing.description }}</p>
         <p><b>Price: </b>${{ listing.price }}</p>
         <a href="{{ url_for('listing.get_listing', listing_id=listing.id) }}">
-            <img src="{{ url_for('listing.get_image', listing_id=listing.id) }}" alt="{{ listing.name }}"
-                 style="width: 400px;">
+            <img src="{{ url_for('listing.get_image', listing_id=listing.id) }}" alt="{{ listing.name }}" style="width: 400px;">
         </a>
     </div>
     {% endfor %}

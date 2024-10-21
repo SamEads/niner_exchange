@@ -11,11 +11,6 @@
                 <div class="message-header">
                     <strong>{{ message.sender }}</strong> 
                     <span class="timestamp">{{ message.timestamp|format_timestamp }}{% if message.edited %} (edited){% endif %}</span>
-                    <!--
-                    <span class="timestamp">{{ message.timestamp|format_timestamp }}{% if message.edited %} (edited){% endif %}</span>
-                    {% if message.sender == session['username'] %}
-                        <button class="edit-button" onclick="editMessage({{ message.id }})">Edit</button>
-                    {% endif %}-->
                 </div>
                 <div class="message-content">
                     {{ message.content }}
@@ -35,6 +30,7 @@
     </form>
 </div>
 <script>
+    // TODO: Maybe put scripts in a separate file? Just for cleanliness
     window.onload = function() {
         var messageHistory = document.getElementById('message-history');
         messageHistory.scrollTop = messageHistory.scrollHeight;
