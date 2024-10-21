@@ -73,6 +73,7 @@ class Listing(db.Model):
 
     user = db.relationship('Users', backref='listings')
     
+    #debug method, can print to webpage without having to use any html
     def to_dict(self):
         return {
             'id': self.id,
