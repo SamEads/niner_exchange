@@ -1,18 +1,47 @@
 {% extends "base.html" %}
 
 {% block title %}Home{% endblock %}
-
 {% block content %}
 
-<div class="header_text">
-    <h2>Niner Exchange</h2>
-</div>
-
 <div class="center_input">
-    <form action="/search" method="POST"> 
+    <div class="header_text">
+        <h2 id="logo_creator"></h2>
+    </div>
+    <form action="/search" method="POST">
         <input type="text" class="text_box" name="query" id="query" required>
-        <button class="button" type="submit">Search!</button>
+        <button class="button" type="submit">Search</button>
     </form>
 </div>
+
+<script>
+
+    // Same note as messaging.html, maybe put this in a separate file if / when we add more scripts
+    document.addEventListener("DOMContentLoaded", function () {
+        // Can change this to whatever, thought it would be nice to have it be dynamic.
+        const logoText = "Niner Exchange";
+
+        const logoElement = document.getElementById('logo_creator');
+
+        logoText.split('').forEach((char, index) => {
+            const span = document.createElement('span');
+            span.textContent = char === ' ' ? '\u00A0' : char; // (Use non-breaking space for spaces- JS is dumb.)
+            span.style.opacity = 0;
+            span.style.transform = 'translateY(-10px)';
+            span.style.transition = `opacity 1s ease ${index * 0.025}s, transform 1s ease ${index * 0.025}s`;
+            logoElement.appendChild(span);
+        });
+
+        // Trigger that smooooth animation
+        setTimeout(() => {
+            logoElement.querySelectorAll('span').forEach(span => {
+                span.style.opacity = 1;
+                span.style.transform = 'translateY(0)';
+            });
+        }, 100);
+
+        // Focus on the search input field on page load
+        document.getElementById('query').focus();
+    });
+</script>
 
 {% endblock %}

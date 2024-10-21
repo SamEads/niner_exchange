@@ -14,23 +14,24 @@
 <body>
 
     <header>
-        <h1>
+        <h1 id="header-logo">
             Niner Exchange
         </h1>
         <div class="topnav">
             <nav>
                 <ul class="nav-links">
-                    <li><a href="/"> <img width="35" height="35" src="https://img.icons8.com/ios/50/home--v1.png" alt="home--v1" /></a></li>
+                    <li><a href="/"> <img width="35" height="35" src="https://img.icons8.com/ios/50/ffffff/home--v1.png" alt="home--v1" /></a></li>
                     {% if session['user_id'] %}
                     <li class="welcome-message">Welcome, {{ session['username'] }}</li>
-                    <li class="profile"><a href="{{ url_for('user.user', username=session['username']) }}">Profile</a></li>
-                    <li class="create_listing"><a href="/listing">Create Listing</a></li>
-                    <li class="view_all_listings"><a href="/listings">View Listings</a></li>
-                    <li class="sign-out"><a href="/logout">Sign Out</a></li>
+                    <li class="profile nav-item"><a href="{{ url_for('user.user', username=session['username']) }}">Profile</a></li>
+                    <li class="inbox nav-item"><a href="/inbox">Inbox</a></li>
+                    <li class="create_listing nav-item"><a href="/listing">Create Listing</a></li>
+                    <li class="view_all_listings nav-item"><a href="/listings">View Listings</a></li>
+                    <li class="settings nav-item"><a href="/">Settings</a></li>
+                    <li class="sign-out nav-item"><a href="/logout">Sign Out</a></li>
                     {% else %}
-                    <li class="register"><a href="/registration">Register</a></li>
-                    <li class="sign-in"><a href="/login">Sign In</a></li>
-
+                    <li class="register nav-item"><a href="/registration">Register</a></li>
+                    <li class="sign-in nav-item"><a href="/login">Sign In</a></li>
                     {% endif %}
                 </ul>
             </nav>
