@@ -77,6 +77,6 @@ CREATE TABLE Messages (
     content TEXT NOT NULL,
     edited BOOLEAN DEFAULT FALSE,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (sender) REFERENCES Users(username) ON DELETE CASCADE,   -- Reference by username
-    FOREIGN KEY (recipient) REFERENCES Users(username) ON DELETE CASCADE  -- Reference by username
+    FOREIGN KEY (sender) REFERENCES Users(username) ON DELETE CASCADE,   
+    FOREIGN KEY (recipient) REFERENCES Users(username) ON DELETE CASCADE  
 );

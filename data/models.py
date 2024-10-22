@@ -35,12 +35,6 @@ class Messages(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.now())
     edited = db.Column(db.Boolean, default=False)
 
-
-    #sender = db.relationship('Users', backref = 'messages')
-    #recipient = db.relationship('Users', backref = 'messages')
-
-
-
 class Ratings(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
@@ -70,7 +64,7 @@ class Listing(db.Model):
     __tablename__ = 'listings'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey(Users.id), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(Users.id,ondelete='CASCADE'), nullable=False)
     title = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text, nullable=False)
     price = db.Column(db.Numeric(10, 2), nullable=False)
@@ -81,7 +75,16 @@ class Listing(db.Model):
     updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
 
-    user = db.relationship('Users', backref='listings')
+    #user = db.relationship('Users', backref='listings',cascade='delete')
+
+    def get_name(self,user_id) -> str:
+
+        u = Users.query.filter_by(id=user_id).first()
+        if u: 
+            return u.username
+        else:
+            "DNE"
+
     
     #debug method, can print to webpage without having to use any html
     def to_dict(self):

@@ -19,7 +19,7 @@ def user(username):
 
     # If user does not exist, render home page
     if user is None:
-        return redirect('/')
+        return redirect('/error')
 
     # Extract user details
     acc_name = user.username
