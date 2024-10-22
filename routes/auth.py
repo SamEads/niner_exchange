@@ -73,5 +73,11 @@ def create():
     db.session.commit()             # Commit changes to database
     
     # Redirect
-    flash("Registration successful! Please log in.")
-    return redirect('/login')
+    return redirect(url_for('user.user',username = new_user.username))
+
+
+
+@auth_bp.route("/error")
+def error():
+    return render_template('error.html')
+    

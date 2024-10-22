@@ -1,6 +1,8 @@
-from flask import Blueprint, render_template, session, redirect
+from flask import Blueprint, render_template, session, redirect,abort
 from data.models import Users,Ratings
 from utils.helpers import level
+from data.models import Users, db
+
 
 user_bp = Blueprint('user', __name__)
 
@@ -17,7 +19,7 @@ def user(username):
 
     # If user does not exist, render home page
     if user is None:
-        return redirect('/')
+        return redirect('/error')
 
     # Extract user details
     acc_name = user.username
@@ -27,3 +29,22 @@ def user(username):
 
     # Render user page
     return render_template('user.html', acc_name=acc_name, class_lv=class_lv, member_since=member_since,rating=rating)
+
+
+@user_bp.route('/delete',methods=["POST","GET"])
+def kill_user():
+
+    username = session.get('username')
+    user = Users.query.filter_by(username=username).first()
+
+    if user: 
+        db.session.delete(user)
+        db.session.commit()
+    else:
+        return abort(400)
+    
+    session.clear()
+
+    return redirect('/')
+
+

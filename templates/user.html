@@ -35,6 +35,15 @@
     </button>
 </div>
 
+<div>
+    <form action="/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete your account?');">
+        <button class="btn btn-danger" type="submit">
+            Delete Account
+        </button>
+    </form>
+</div>
+
+
 <form action="/upload" method="POST" enctype="multipart/form-data">
     <label for="profile" style="display: none;">Profile Picture:</label>
     <input type="file" name="profile" id="profile" accept="image/*">
