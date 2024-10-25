@@ -47,9 +47,10 @@ def createListing():
 @listing_bp.route('/listing/<int:listing_id>')
 def get_listing(listing_id):
     listing = Listing.query.filter_by(id=listing_id).first()
+    owner = listing.get_name(listing.user_id)
     if listing is None:
         return abort(404, description="Listing not found")
-    return render_template('view_listing.html', listing=listing)
+    return render_template('view_listing.html', listing=listing,owner=owner)
 
 # routes to the image
 @listing_bp.route('/listing/<int:listing_id>/image')
