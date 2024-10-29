@@ -44,6 +44,26 @@
 </div>
 
 
+{% if acc_name != session['username']%}
+<div class="ratings">
+	<form action="/rate" method="POST" id="rating-form">
+		<label for="rating">Rate this user:</label>
+		<select name="rating" id="rating" required>
+			<option value="">Select rating</option>
+			<option value="1">1 Star</option>
+			<option value="2">2 Stars</option>
+			<option value="3">3 Stars</option>
+			<option value="4">4 Stars</option>
+			<option value="5">5 Stars</option>
+		</select>
+		<button type="submit" class="rate-button">Submit Rating</button>
+	</form>
+</div>
+{% else %}
+
+{% endif %}
+
+
 <form action="/upload" method="POST" enctype="multipart/form-data">
     <label for="profile" style="display: none;">Profile Picture:</label>
     <input type="file" name="profile" id="profile" accept="image/*">
