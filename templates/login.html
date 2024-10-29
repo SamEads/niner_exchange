@@ -39,15 +39,6 @@
             togglePasswordIcon.classList.add("fa-eye");
         }
     }
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            let msg = "";
-            {% for message in messages %}
-                msg += "{{ message }}\n"
-            {% endfor %}
-            alert(msg);
-        {% endif %}
-    {% endwith %}
 </script>
 
 {% endblock %}

@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import date, datetime
+import bcrypt
 db = SQLAlchemy()
 import random,string
 
@@ -23,6 +24,9 @@ class Users(db.Model):
         self.email = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(5)) + '@' +''.join(random.choice(string.ascii_letters + string.digits) for _ in range(5))
 
         self.class_level = 1
+
+    def set_password(self, password):
+        self.password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
 class Messages(db.Model):
 
