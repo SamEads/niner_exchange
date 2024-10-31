@@ -41,7 +41,7 @@ def settings():
             user.set_password(new_password)
 
         db.session.commit()
-
+        session.clear()
         flash('Settings updated successfully! Please log in again.', 'success')
         return redirect('/login')
     return render_template('setting.html', user=user)
