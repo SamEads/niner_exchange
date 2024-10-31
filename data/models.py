@@ -46,6 +46,8 @@ class Ratings(db.Model):
 
     def __init__(self, user_id, rater_id, rating):
         self.user_id = user_id
+        self.rater_id = rater_id
+        self.rating = rating
 
 
     #Get rating based on user ID
@@ -60,6 +62,10 @@ class Ratings(db.Model):
 
         return actual
 
+    def rating_exists(user_id,rater_id):
+
+        return db.session.query(Ratings).filter_by(user_id=user_id, rater_id=rater_id).count() > 0
+
 class Listing(db.Model):
     __tablename__ = 'listings'
 
@@ -73,9 +79,6 @@ class Listing(db.Model):
     mimetype = db.Column(db.Text, nullable =False)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
-
-
-    #user = db.relationship('Users', backref='listings',cascade='delete')
 
     def get_name(self,user_id) -> str:
 
