@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Settings{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='setting.css') }}"/>
+{% endblock %}
+
+{%block content %}
+<div class="container">
+    <h2>Edit Account Settings</h2>
+    <form action="{{ url_for('setting.settings') }}" method="POST">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" id="email" name="email" value="{{ user.email }}">
+        </div>
+
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="text" class="form-control" id="password" name="password"
+                   placeholder="Leave blank to keep current password">
+        </div>
+
+        <div class="form-group">
+            <label for="class-level">Class Level (1-4)</label>
+            <input type="text" class="form-control" id="class-level" name="class-level" value="{{ user.class_level }}">
+        </div>
+        <button type="submit">Update Settings</button>
+    </form>
+</div>
+
+{% endblock %}
