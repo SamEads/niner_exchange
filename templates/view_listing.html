@@ -16,7 +16,7 @@
     <img src="{{ url_for('listing.get_image', listing_id=listing.id) }}" alt="{{ listing.name }}"
          style="width: 400px; height: auto;">
     <a class="send_message_link" href="{{ url_for('messaging.view_messages', recipient=owner) }}">Send Message to {{ owner }}</a>
-
+    <a class ="view_profile" href="{{ url_for('user.user', username=owner) }}">View Profile</a>
 </div>
 
 {% endblock %}

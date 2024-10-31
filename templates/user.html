@@ -55,27 +55,29 @@
     &nbsp;
 </div>
 
-{% if acc_name != session['username']%}
-<div class="ratings">
-	<form action="/rate" method="POST" id="rating-form" required>
-		<label for="rating">Rate this user:</label>
-		<select name="rating" id="rating" required>
-			<option value="">Select rating</option>
-			<option value="1">1 Star</option>
-			<option value="2">2 Stars</option>
-			<option value="3">3 Stars</option>
-			<option value="4">4 Stars</option>
-			<option value="5">5 Stars</option>
-		</select>
+{% if acc_name != session['username'] %}
+    {% if can_rate %}
+    <div class="ratings">
+        <form action="/rate" method="POST" id="rating-form" required>
+            <label for="rating">Rate this user:</label>
+            <select name="rating" id="rating" required>
+                <option value="">Select rating</option>
+                <option value="1">1 Star</option>
+                <option value="2">2 Stars</option>
+                <option value="3">3 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="5">5 Stars</option>
+            </select>
 
-        <input type="hidden" name ="rated_user" value="{{ acc_name }}">
-
-		<button type="submit" class="rate-button">Submit Rating</button>
-	</form>
-</div>
-{% else %}
-
+            <input type="hidden" name="rated_user" value="{{ acc_name }}">
+            <button type="submit" class="rate-button">Submit Rating</button>
+        </form>
+    </div>
+    {% else %}
+        <p>You must send and receive a message to this user before you can rate them</p>
+    {% endif %}
 {% endif %}
+
 
 <div>
     &nbsp;
