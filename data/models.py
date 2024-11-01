@@ -22,7 +22,6 @@ class Users(db.Model):
         self.password_hash = password_hash
         self.first_name = "Placeholder Name"
         self.email = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(5)) + '@' +''.join(random.choice(string.ascii_letters + string.digits) for _ in range(5))
-
         self.class_level = 1
 
     def set_password(self, password):
