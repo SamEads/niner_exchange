@@ -15,11 +15,13 @@
             <input type="text" class="form-control" id="email" name="email" value="{{ user.email }}">
         </div>
 
+        <!--
         <div class="form-group">
             <label for="username">Username</label>
             <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}">
         </div>
-
+        -->
+        
         <div class="form-group">
             <label for="password">Password</label>
             <input type="text" class="form-control" id="password" name="password"
@@ -28,7 +30,7 @@
 
         <div class="form-group">
             <label for="class-level">Class Level (1-4)</label>
-            <input type="text" class="form-control" id="class-level" name="class-level" value="{{ user.class_level }}">
+            <input type="number" class="form-control" id="class-level" min="1" max="4" name="class-level" value="{{ user.class_level }}"required>
         </div>
         <button type="submit">Update Settings</button>
     </form>
