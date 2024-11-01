@@ -92,50 +92,43 @@ def list_all_listings():
     if session.get('curr_query'):
         session.pop('curr_query')
 
-    all_listings = Listing.query.all()
-    return render_template('list_all_listings.html', listings=all_listings)
+    page = request.args.get('page', 1, type=int)
+    per_page = 8  # Number of listings per page
+    paginated_listings = Listing.query.paginate(page=page, per_page=per_page, error_out=False)
+    return render_template('list_all_listings.html', listings=paginated_listings)
 
 
 
 
-@listing_bp.route('/sort_listing',methods = ['POST'])
-def sorted_listing() -> render_template:
-
+@listing_bp.route('/sort_listing', methods=['POST'])
+def sorted_listing():
     query = session.get('curr_query')
-    critera = request.form.get('criteria')
-    order = request.form.get('order','asc')
+    criteria = request.form.get('criteria', 'title')
+    order = request.form.get('order', 'asc')
+    page = request.form.get('page', 1, type=int)
+    per_page = 8  # Number of listings per page
 
     if query:
         res = Listing.query.filter(
             (Listing.title.ilike(f"%{query}%")) |
             (Listing.description.ilike(f"%{query}%"))
-            ).limit(10) #can paginate later
-    else: 
-        res = Listing.query.limit(10).all()
-
-    
-    sort_map = {
-        'title': 'title',
-        'price': 'price',
-        'created_at': 'created_at',
-    }
-     
-    col = sort_map.get(critera)
-  
-    if order =="asc":
-        res = sorted(res, key=lambda x: getattr(x, str(col)))
-    elif order == "desc":
-        res = sorted(res, key=lambda x: getattr(x, str(col)), reverse=True)
+        )
     else:
-        return -1
-    
+        res = Listing.query
 
-    return render_template('list_all_listings.html', listings = res)
-     
+    sort_map = {
+        'title': Listing.title,
+        'price': Listing.price,
+        'created_at': Listing.created_at,
+    }
 
+    col = sort_map.get(criteria, Listing.title)
 
+    if order == "asc":
+        res = res.order_by(col.asc())
+    elif order == "desc":
+        res = res.order_by(col.desc())
 
+    paginated_listings = res.paginate(page=page, per_page=per_page, error_out=False)
 
-
-
-
+    return render_template('list_all_listings.html', listings=paginated_listings)
