@@ -36,11 +36,49 @@
 </div>
 
 <div>
+    &nbsp;
+</div>
+
+{% if acc_name == session['username'] %}
+<div>
     <form action="/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete your account?');">
         <button class="btn btn-danger" type="submit">
             Delete Account
         </button>
     </form>
+</div>
+{% else %}
+
+{% endif %}
+
+<div>
+    &nbsp;
+</div>
+
+{% if acc_name != session['username']%}
+<div class="ratings">
+	<form action="/rate" method="POST" id="rating-form" required>
+		<label for="rating">Rate this user:</label>
+		<select name="rating" id="rating" required>
+			<option value="">Select rating</option>
+			<option value="1">1 Star</option>
+			<option value="2">2 Stars</option>
+			<option value="3">3 Stars</option>
+			<option value="4">4 Stars</option>
+			<option value="5">5 Stars</option>
+		</select>
+
+        <input type="hidden" name ="rated_user" value="{{ acc_name }}">
+
+		<button type="submit" class="rate-button">Submit Rating</button>
+	</form>
+</div>
+{% else %}
+
+{% endif %}
+
+<div>
+    &nbsp;
 </div>
 
 

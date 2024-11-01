@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>{% block title %}{% endblock %}</title>
     {% block head %}{% endblock %}
@@ -13,37 +14,49 @@
 
 <body>
 
-    <header>
-        <h1 id="header-logo">
-            Niner Exchange
-        </h1>
-        <div class="topnav">
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="/"> <img width="35" height="35" src="https://img.icons8.com/ios/50/ffffff/home--v1.png" alt="home--v1" /></a></li>
-                    {% if session['user_id'] %}
-                    <li class="welcome-message">Welcome, {{ session['username'] }}</li>
-                    <li class="profile nav-item"><a href="{{ url_for('user.user', username=session['username']) }}">Profile</a></li>
-                    <li class="inbox nav-item"><a href="/inbox">Inbox</a></li>
-                    <li class="create_listing nav-item"><a href="/listing">Create Listing</a></li>
-                    <li class="view_all_listings nav-item"><a href="/listings">View Listings</a></li>
-                    <li class="settings nav-item"><a href="/">Settings</a></li>
-                    <li class="sign-out nav-item"><a href="/logout">Sign Out</a></li>
-                    {% else %}
-                    <li class="register nav-item"><a href="/registration">Register</a></li>
-                    <li class="sign-in nav-item"><a href="/login">Sign In</a></li>
-                    {% endif %}
-                </ul>
-            </nav>
-        </div>
-    </header>
+<header>
+    <h1 id="header-logo">
+        Niner Exchange
+    </h1>
+    <div class="topnav">
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/"> <img width="35" height="35" src="https://img.icons8.com/ios/50/ffffff/home--v1.png"
+                                      alt="home--v1"/></a></li>
+                {% if session['user_id'] %}
+                <li class="welcome-message">Welcome, {{ session['username'] }}</li>
+                <li class="profile nav-item"><a
+                        href="{{ url_for('user.user', username=session['username']) }}">Profile</a></li>
+                <li class="inbox nav-item"><a href="/inbox">Inbox</a></li>
+                <li class="create_listing nav-item"><a href="/listing">Create Listing</a></li>
+                <li class="view_all_listings nav-item"><a href="/listings">View Listings</a></li>
+                <li class="settings nav-item"><a href="/settings">Settings</a></li>
+                <li class="sign-out nav-item"><a href="/logout">Sign Out</a></li>
+                {% else %}
+                <li class="register nav-item"><a href="/registration">Register</a></li>
+                <li class="sign-in nav-item"><a href="/login">Sign In</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</header>
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+<main>
+    {% block content %}{% endblock %}
+</main>
 
-    <footer>&copy;2024 Niner Exchange. All rights reserved.</footer>
+<footer>&copy;2024 Niner Exchange. All rights reserved.</footer>
 </body>
-
+<script>
+    {% with messages = get_flashed_messages() %}
+{% if messages %}
+    let msg = "";
+    {% for message in messages %}
+        msg += "{{ message }}\n"
+    {% endfor %}
+    alert(msg);
+{% endif %}
+{% endwith %}
+</script>
 
 </html>

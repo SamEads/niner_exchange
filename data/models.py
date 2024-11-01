@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import date, datetime
+import bcrypt
 db = SQLAlchemy()
 import random,string
 
@@ -21,8 +22,10 @@ class Users(db.Model):
         self.password_hash = password_hash
         self.first_name = "Placeholder Name"
         self.email = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(5)) + '@' +''.join(random.choice(string.ascii_letters + string.digits) for _ in range(5))
-
         self.class_level = 1
+
+    def set_password(self, password):
+        self.password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
 class Messages(db.Model):
 
@@ -46,6 +49,8 @@ class Ratings(db.Model):
 
     def __init__(self, user_id, rater_id, rating):
         self.user_id = user_id
+        self.rater_id = rater_id
+        self.rating = rating
 
 
     #Get rating based on user ID
@@ -60,6 +65,10 @@ class Ratings(db.Model):
 
         return actual
 
+    def rating_exists(user_id,rater_id):
+
+        return db.session.query(Ratings).filter_by(user_id=user_id, rater_id=rater_id).count() > 0
+
 class Listing(db.Model):
     __tablename__ = 'listings'
 
@@ -73,9 +82,6 @@ class Listing(db.Model):
     mimetype = db.Column(db.Text, nullable =False)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
-
-
-    #user = db.relationship('Users', backref='listings',cascade='delete')
 
     def get_name(self,user_id) -> str:
 
