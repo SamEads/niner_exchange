@@ -11,6 +11,7 @@ bcrypt = Bcrypt()
 def login():
     return render_template('login.html')
 
+
 # Route to render registration page
 @auth_bp.route('/registration')
 def registration():
