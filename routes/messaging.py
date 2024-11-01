@@ -47,7 +47,6 @@ def send_message():
     db.session.add(new_message)
     db.session.commit() 
 
-    flash('Message sent successfully!')
     return redirect(url_for('messaging.view_messages', recipient=recipient_username))
 
 '''

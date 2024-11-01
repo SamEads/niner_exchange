@@ -1,5 +1,5 @@
 from flask import Blueprint, request, session, redirect, render_template,url_for,flash
-from data.models import *
+from data.models import Users,Messages,Ratings,db
 
 
 info_bp =  Blueprint('info', __name__)
@@ -31,7 +31,7 @@ def rate_usr():
         existing_rating = Ratings.query.filter_by(user_id=user_to_rate.id, rater_id = curr_user_rating.id).first()
 
         if existing_rating:
-                existing_rating.rating = int(rating)
+                existing_rating.rating = rating
                 db.session.commit()
                 return redirect(url_for('user.user',username=user_to_rate.username))
 
