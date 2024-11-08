@@ -66,21 +66,22 @@ def get_image(listing_id):
 @listing_bp.route("/search",methods=["POST","GET"])
 def list_query():
 
-    query = request.form.get('query')
+    query = request.form.get('query') or session.get('curr_query')
     session["curr_query"] = query
 
     if not query:
-
         return abort(400,description ="Invalid query")
     
+    page = request.args.get('page', 1, type=int)
+    per_page = 8 
 
     res = Listing.query.filter(
         (Listing.title.ilike(f"%{query}%")) |
         (Listing.description.ilike(f"%{query}%"))
-    ).limit(10) #can paginate later
+    ).paginate(page=page, per_page=per_page, error_out=False)
 
-    if not res:
-        return None
+    if not res.items:
+        return render_template('list_all_listings.html', listings=res, message="No listings found.")
     
     
     #json to display the search query
