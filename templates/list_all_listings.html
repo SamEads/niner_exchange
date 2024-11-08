@@ -57,7 +57,7 @@
         {% endif %}
         
         <!-- Show the range of pages around the current page -->
-        {% for page_num in range(2, listings.pages + 1) %}
+        {% for page_num in range(2, listings.pages) %}
             {% if page_num >= listings.page - 2 and page_num <= listings.page + 2 %}
                 <button type="submit" name="page" value="{{ page_num }}" class="{% if page_num == listings.page %}current-page{% endif %}">{{ page_num }}</button>
             {% endif %}
