@@ -4,3 +4,4 @@ __pycache__
 db.py
 .idea
 .DS_Store
+/.vscode
