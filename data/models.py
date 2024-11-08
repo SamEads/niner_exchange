@@ -38,6 +38,9 @@ class Messages(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.now())
     edited = db.Column(db.Boolean, default=False)
 
+
+    
+
 class Ratings(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
@@ -51,6 +54,19 @@ class Ratings(db.Model):
         self.user_id = user_id
         self.rater_id = rater_id
         self.rating = rating
+
+    def allow_rating(u1,u2) -> bool:
+        
+        g = (
+    Messages.query.filter(
+        (Messages.sender == u1) & (Messages.recipient == u2)
+    ).count() > 0 and 
+    Messages.query.filter(
+        (Messages.sender == u2) & (Messages.recipient == u1)
+    ).count() > 0
+    )
+        return g
+
 
 
     #Get rating based on user ID
