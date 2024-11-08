@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Search For Users{% endblock %}
+{% block content %}
+
+<form action="/user_search" method="POST">
+    <input type="text" class="text_box" name="query" id="query" required>
+    <button class="button" type="submit">Search</button>
+</form>
+
+{% endblock %}

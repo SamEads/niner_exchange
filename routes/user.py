@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session, redirect,abort
+from flask import Blueprint, render_template, session, redirect,abort,request,jsonify
 from data.models import Users,Ratings
 from utils.helpers import level
 from data.models import Users, db
@@ -48,4 +48,27 @@ def kill_user():
 
     return redirect('/')
 
+@user_bp.route('/users_lookup')
+def search():
+    return render_template('list_users.html')
+    
+@user_bp.route('/user_search',methods=["POST","GET"])
+def search_usr():
 
+    query = request.form.get('query') or session.get('usr_query')
+    session['usr_query'] = query
+
+    if not query: 
+        return abort(400)
+    
+
+    res = Users.query.filter(
+        (Users.username.ilike(f"%{query}%")) |
+        (Users.email.ilike(f"%{query}%"))
+    ).all()
+
+    return jsonify([d.to_dict() for d in res])
+    
+
+
+    
