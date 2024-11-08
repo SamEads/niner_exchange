@@ -55,7 +55,7 @@
     &nbsp;
 </div>
 
-{% if acc_name != session['username']%}
+{% if acc_name != session['username'] and rate_flag %}
 <div class="ratings">
 	<form action="/rate" method="POST" id="rating-form" required>
 		<label for="rating">Rate this user:</label>

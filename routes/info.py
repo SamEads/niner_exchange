@@ -5,7 +5,6 @@ from data.models import Users,Messages,Ratings,db
 info_bp =  Blueprint('info', __name__)
 
 
-
 @info_bp.route('/rate',methods=['GET','POST'])
 def rate_usr():
     rating = int(request.form.get('rating'))
