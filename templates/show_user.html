@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %} BLANK {% endblock %}
+{% block title %} {% endblock %}
 
 {% block content %}
+<h1 class="header mt-1 mb-1">Search : {{session['usr_query']}}</h1>
+
 
 {% if users.items %}
-<div class="card-columns mt-5 mb-3">
+<div class="card-columns mt-2 mb-3">
     {% for user in users.items %}
     <div class = "card" >
             <div class = "card-body bg-light">
