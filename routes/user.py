@@ -61,9 +61,8 @@ def search():
 @user_bp.route('/user_search/<int:page_num>', methods=["GET","POST"])
 def search_usr(page_num):
 
-    query = session.get('usr_query')
-    #session['usr_query'] = query
-
+    query = session.get('usr_query') or request.form.get('query')
+    print(query)
     if not query: 
         return abort(400)
     
@@ -75,7 +74,7 @@ def search_usr(page_num):
 
     for k in res: 
         k.class_level = level(k.class_level)
-    return render_template('show_user.html',users=res)
+    return render_template('show_user.html',users=res,query=query)
     
 
 
