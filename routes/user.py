@@ -48,12 +48,12 @@ def kill_user():
 
     return redirect('/')
 
-@user_bp.route('/users_lookup')
+@user_bp.route('/users_lookup',methods=['GET'])
 def search():
-    return render_template('list_users.html')
+    return render_template('list_users_search.html')
     
-@user_bp.route('/user_search',methods=["POST","GET"])
-def search_usr():
+@user_bp.route('/user_search/<int:page_num>', methods=["GET","POST"])
+def search_usr(page_num):
 
     query = request.form.get('query') or session.get('usr_query')
     session['usr_query'] = query
@@ -65,9 +65,12 @@ def search_usr():
     res = Users.query.filter(
         (Users.username.ilike(f"%{query}%")) |
         (Users.email.ilike(f"%{query}%"))
-    ).all()
+    ).paginate(per_page=9,page=page_num,error_out=True)
 
-    return jsonify([d.to_dict() for d in res])
+    for k in res: 
+        k.class_level = level(k.class_level)
+   
+    return render_template('show_user.html',users=res)
     
 
 
