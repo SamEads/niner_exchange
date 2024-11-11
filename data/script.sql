@@ -80,4 +80,16 @@ CREATE TABLE Messages (
     FOREIGN KEY (sender) REFERENCES Users(username) ON DELETE CASCADE,   
     FOREIGN KEY (recipient) REFERENCES Users(username) ON DELETE CASCADE  
 );
+
+
+CREATE TABLE Friendships (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,          -- User who sent the friend request
+    friend_id INT NOT NULL,        -- User who received the friend request
+    status VARCHAR(50) CHECK (status IN ('pending', 'accepted', 'declined')) NOT NULL DEFAULT 'pending', -- Status of friendship
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
+    FOREIGN KEY (friend_id) REFERENCES Users(id) ON DELETE CASCADE,
+    UNIQUE (user_id, friend_id)    -- Ensures no duplicate friendships
+);
  
