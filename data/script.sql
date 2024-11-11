@@ -80,3 +80,4 @@ CREATE TABLE Messages (
     FOREIGN KEY (sender) REFERENCES Users(username) ON DELETE CASCADE,   
     FOREIGN KEY (recipient) REFERENCES Users(username) ON DELETE CASCADE  
 );
+ 
