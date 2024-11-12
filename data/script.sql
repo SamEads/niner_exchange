@@ -80,3 +80,11 @@ CREATE TABLE Messages (
     FOREIGN KEY (sender) REFERENCES Users(username) ON DELETE CASCADE,   
     FOREIGN KEY (recipient) REFERENCES Users(username) ON DELETE CASCADE  
 );
+
+CREATE TABLE Uploads (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    img BYTEA NOT NULL,
+    filename TEXT NOT NULL,
+    mimetype TEXT NOT NULL
+);
