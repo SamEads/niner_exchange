@@ -69,13 +69,13 @@ def create():
     hashed_password = bcrypt.generate_password_hash(password, 12).decode('utf-8')
     new_user = Users(username, hashed_password)
 
+    session['user_id'] = new_user.id
     session['username'] = username  # Set session username
     db.session.add(new_user)        # Add new user to database
     db.session.commit()             # Commit changes to database
     
     # Redirect
     return redirect(url_for('user.user',username = new_user.username))
-
 
 
 @auth_bp.route("/error")

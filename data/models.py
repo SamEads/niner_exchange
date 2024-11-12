@@ -55,6 +55,7 @@ class Ratings(db.Model):
         self.rater_id = rater_id
         self.rating = rating
 
+    @staticmethod
     def allow_rating(u1,u2) -> bool:
         
         g = (
@@ -69,7 +70,7 @@ class Ratings(db.Model):
 
 
 
-    #Get rating based on user ID
+    @staticmethod
     def get_rating(user_id: int) -> int:
 
         ratings = Ratings.query.filter_by(user_id = user_id).all()
@@ -81,6 +82,7 @@ class Ratings(db.Model):
 
         return actual
 
+    @staticmethod
     def rating_exists(user_id,rater_id):
 
         return db.session.query(Ratings).filter_by(user_id=user_id, rater_id=rater_id).count() > 0
@@ -122,3 +124,65 @@ class Listing(db.Model):
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'updated_at': self.updated_at.isoformat() if self.updated_at else None,
         }
+
+
+
+class Friendship(db.Model):
+    __tablename__ = 'friendships'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
+    friend_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
+    status = db.Column(db.String(50), nullable=False, default='pending')  # Status can be 'pending', 'accepted', or 'declined'
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # Constraints
+    __table_args__ = (
+        db.CheckConstraint('status IN ("pending", "accepted", "declined")', name='valid_status'),
+        db.UniqueConstraint('user_id', 'friend_id', name='unique_friendship'),
+        db.CheckConstraint('user_id != friend_id', name='no_self_friendship')
+    )
+
+    def __init__(self, user_id, friend_id, status='pending'):
+        self.user_id = user_id
+        self.friend_id = friend_id
+        self.status = status
+
+    @staticmethod
+    def send_friend_request(user_id, friend_id):
+        if user_id != friend_id:
+            friendship = Friendship(user_id=user_id, friend_id=friend_id)
+            db.session.add(friendship)
+            db.session.commit()
+            return friendship
+        return None
+
+    @staticmethod
+    def accept_friend_request(user_id, friend_id):
+        friendship = Friendship.query.filter_by(user_id=friend_id, friend_id=user_id, status='pending').first()
+        if friendship:
+            friendship.status = 'accepted'
+            db.session.commit()
+            return friendship
+        return None
+
+    @staticmethod
+    def decline_friend_request(user_id, friend_id):
+        friendship = Friendship.query.filter_by(user_id=friend_id, friend_id=user_id, status='pending').first()
+        if friendship:
+            friendship.status = 'declined'
+            db.session.commit()
+            return friendship
+        return None
+
+    @staticmethod
+    def remove_friend(user_id, friend_id):
+        friendship = Friendship.query.filter(
+            ((Friendship.user_id == user_id) & (Friendship.friend_id == friend_id)) |
+            ((Friendship.user_id == friend_id) & (Friendship.friend_id == user_id))
+        ).first()
+        if friendship:
+            db.session.delete(friendship)
+            db.session.commit()
+            return True
+        return False

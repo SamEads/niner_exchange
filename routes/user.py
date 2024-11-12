@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, session, redirect,abort
-from data.models import Users,Ratings
+from flask import Blueprint, render_template, session, redirect,abort,request
+from data.models import Users,Ratings,Friendship
 from utils.helpers import level
 from data.models import Users, db
 
@@ -48,4 +48,17 @@ def kill_user():
 
     return redirect('/')
 
+
+@user_bp.route('/friend_request', methods=["POST","GET"])
+def friend_request():
+
+    other_id = request.args.get('usr_id')
+    curr_id = session.get('user_id')
+
+    rel = Friendship.send_friend_request(curr_id,other_id)
+
+    return rel.status
+    
+
+    
 
