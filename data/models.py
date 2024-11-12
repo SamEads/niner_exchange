@@ -27,6 +27,18 @@ class Users(db.Model):
     def set_password(self, password):
         self.password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
+    def to_dict(self):
+       
+        return {
+            'id': self.id,
+            'username': self.username,
+            'first_name': self.first_name,
+            'email': self.email,
+            'class_level': self.class_level,
+            'created_at': self.created_at.strftime('%Y-%m-%d'),  # Format date to string
+            'updated_at': self.updated_at.strftime('%Y-%m-%d')  # Format date to string
+        }
+
 class Messages(db.Model):
 
     __tablename__ = 'messages'

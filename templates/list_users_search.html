@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Search For Users{% endblock %}
+{% block content %}
+<div class = "center_input">
+    <form action="{{ url_for('user.search_usr', page_num=1 )}}" method="POST">
+        <input type="text" class="text_box" name="query" id="query" required>
+        <button class="button" type="submit">Search</button>
+    </form>
+</div>
+{% endblock %}

@@ -48,6 +48,35 @@ def kill_user():
 
     return redirect('/')
 
+@user_bp.route('/users_lookup',methods=['GET',"POST"])
+def search():
+    if request.method == 'POST':
+
+        session['usr_query'] = request.form.get('query')
+
+        return redirect(url_for('user.search_usr', page_num=1))
+   
+    return render_template('list_users_search.html')
+    
+@user_bp.route('/user_search/<int:page_num>', methods=["GET","POST"])
+def search_usr(page_num):
+
+    query = session.get('usr_query') or request.form.get('query')
+    print(query)
+    if not query: 
+        return abort(400)
+    
+
+    res = Users.query.filter(
+        (Users.username.ilike(f"%{query}%")) |
+        (Users.email.ilike(f"%{query}%"))
+    ).paginate(per_page=9,page=page_num,error_out=True)
+
+    for k in res: 
+        k.class_level = level(k.class_level)
+    return render_template('show_user.html',users=res,query=query)
+    
+
 
 @user_bp.route('/friend_request', methods=["POST","GET"])
 def friend_request():
