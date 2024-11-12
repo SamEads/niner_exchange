@@ -29,7 +29,6 @@ class Users(db.Model):
     def set_password(self, password):
         self.password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
-
 class Messages(db.Model):
     __tablename__ = 'messages'
 

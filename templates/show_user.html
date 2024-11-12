@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %} {% endblock %}
+
+{% block content %}
+<h1 class="header mt-1 mb-1">Search : {{query}}</h1>
+
+
+{% if users.items %}
+<div class="card-columns mt-2 mb-3">
+    {% for user in users.items %}
+    <div class = "card" >
+            <div class = "card-body bg-light">
+                <h5 class="card-title">{{user.username}}</h5>
+                <h6 class = "card-subtitle mb-3 text-muted">{{user.class_level}} year student</h6>
+                <p class = "card-text">{{user.first_name}}</p>
+                <a  href="{{ url_for('user.user', username=user.username) }}" class="stretched-link">{{user.first_name}}'s page</a>
+            </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class ="d-flex justify-content-center">
+{% for page in users.iter_pages(left_edge=3,right_edge=4) %}
+        {% if page %}
+        <a class = "link-opacity-10-hover ml-1 mr-1 mb-3" href = "{{ url_for('user.search_usr', page_num=page) }}">{{page}}</a>
+        {% else %}
+        ...
+        {% endif %}
+{% endfor %}
+</div>
+{% else %}
+<div class = "center_input">
+    <p>no users found</p>
+</div>
+
+{% endif %}
+
+{% endblock %}
