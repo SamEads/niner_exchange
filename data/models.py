@@ -29,6 +29,7 @@ class Users(db.Model):
     def set_password(self, password):
         self.password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
+
 class Messages(db.Model):
     __tablename__ = 'messages'
 
@@ -39,6 +40,20 @@ class Messages(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.now())
     edited = db.Column(db.Boolean, default=False)
 
+    # debug method, can print to webpage without having to use any html
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'title': self.title,
+            'description': self.description,
+            'price': str(self.price),  # Convert Decimal to string for JSON serialization
+            'img': self.img.decode('utf-8') if isinstance(self.img, bytes) else self.img,
+            'name': self.name,
+            'mimetype': self.mimetype,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None,
+        }
 
 class Ratings(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -92,6 +107,12 @@ class Listing(db.Model):
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
+    def get_name(self, user_id) -> str:
+        u = Users.query.filter_by(id=user_id).first()
+        if u:
+            return u.username
+        else:
+            "DNE"
 
 class Uploads(db.Model):
     __tablename__ = 'uploads'
@@ -100,28 +121,3 @@ class Uploads(db.Model):
     img = db.Column(db.LargeBinary, nullable=False)
     filename = db.Column(db.Text, nullable=False)
     mimetype = db.Column(db.Text, nullable=False)
-
-
-def get_name(self, user_id) -> str:
-    u = Users.query.filter_by(id=user_id).first()
-    if u:
-        return u.username
-    else:
-        "DNE"
-
-    # debug method, can print to webpage without having to use any html
-
-
-def to_dict(self):
-    return {
-        'id': self.id,
-        'user_id': self.user_id,
-        'title': self.title,
-        'description': self.description,
-        'price': str(self.price),  # Convert Decimal to string for JSON serialization
-        'img': self.img.decode('utf-8') if isinstance(self.img, bytes) else self.img,
-        'name': self.name,
-        'mimetype': self.mimetype,
-        'created_at': self.created_at.isoformat() if self.created_at else None,
-        'updated_at': self.updated_at.isoformat() if self.updated_at else None,
-    }
