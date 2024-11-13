@@ -1,19 +1,24 @@
-from flask import Blueprint, request, session, redirect, abort, render_template, url_for,jsonify,Response
+from flask import Blueprint, request, session, redirect, abort, render_template, url_for, jsonify, Response, flash
 from flask_bcrypt import Bcrypt
 from data.models import Users, Listing, db
 from werkzeug.utils import secure_filename
+
 # Create blueprint for authentication related routes
 listing_bp = Blueprint('listing', __name__)
 bcrypt = Bcrypt()
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_MIME_TYPES = {'image/png', 'image/jpeg', 'image/gif'}
+
 
 # Route to render listing page
 @listing_bp.route('/listing')
 def listing():
     return render_template('listing.html')
 
+
 @listing_bp.route('/listing', methods=['POST'])
 def createListing():
-
     user_id = session.get('user_id')
     title = request.form.get('title')
     description = request.form.get('description')
@@ -26,22 +31,37 @@ def createListing():
         return abort(400, description="You must be logged in to create a post")
     if not pic:
         return abort(400, description="No picture uploaded")  # Handle missing file
+    if not allowed_file(pic):
+        flash('Error: Invalid file type. Allowed types are png, jpg, jpeg, and gif.')
+        return redirect(request.url)
 
     filename = secure_filename(pic.filename)
     mimetype = pic.mimetype
 
     new_listing = Listing(
-        user_id = user_id,
-        title = title,
-        description = description,
-        price = float(price),
-        img = pic.read(),
-        name = filename,
-        mimetype = mimetype
+        user_id=user_id,
+        title=title,
+        description=description,
+        price=float(price),
+        img=pic.read(),
+        name=filename,
+        mimetype=mimetype
     )
     db.session.add(new_listing)
     db.session.commit()
     return redirect(url_for('listing.get_listing', listing_id=new_listing.id))
+
+
+def allowed_file(file):
+    file_ext = file.name.rsplit('.', 1)[1].lower() if '.' in file.name else ''
+    if file_ext not in ALLOWED_EXTENSIONS:
+        return False
+
+    if file.mimetype not in ALLOWED_MIME_TYPES:
+        return False
+
+    return True
+
 
 # routes to a completed listing
 @listing_bp.route('/listing/<int:listing_id>')
@@ -50,7 +70,8 @@ def get_listing(listing_id):
     owner = listing.get_name(listing.user_id)
     if listing is None:
         return abort(404, description="Listing not found")
-    return render_template('view_listing.html', listing=listing,owner=owner)
+    return render_template('view_listing.html', listing=listing, owner=owner)
+
 
 # routes to the image
 @listing_bp.route('/listing/<int:listing_id>/image')
@@ -63,17 +84,16 @@ def get_image(listing_id):
     )
 
 
-@listing_bp.route("/search",methods=["POST","GET"])
+@listing_bp.route("/search", methods=["POST", "GET"])
 def list_query():
-
     query = request.form.get('query') or session.get('curr_query')
     session["curr_query"] = query
 
     if not query:
-        return abort(400,description ="Invalid query")
-    
+        return abort(400, description="Invalid query")
+
     page = request.args.get('page', 1, type=int)
-    per_page = 8 
+    per_page = 8
 
     res = Listing.query.filter(
         (Listing.title.ilike(f"%{query}%")) |
@@ -82,10 +102,10 @@ def list_query():
 
     if not res.items:
         return render_template('list_all_listings.html', listings=res, message="No listings found.")
-    
-    
-    #json to display the search query
+
+    # json to display the search query
     return render_template('list_all_listings.html', listings=res)
+
 
 # routes to show all listings displayed in a grid
 @listing_bp.route('/listings')
@@ -97,8 +117,6 @@ def list_all_listings():
     per_page = 8  # Number of listings per page
     paginated_listings = Listing.query.paginate(page=page, per_page=per_page, error_out=False)
     return render_template('list_all_listings.html', listings=paginated_listings)
-
-
 
 
 @listing_bp.route('/sort_listing', methods=['POST'])
