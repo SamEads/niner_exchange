@@ -85,7 +85,7 @@
     &nbsp;
 </div>
 
-
+{% if acc_name == session['username'] %}
 <form action="{{ url_for('user.user', username=acc_name) }}" method="POST" enctype="multipart/form-data">
     <label for="files">Profile Picture:</label>
     <input type="file" name="files" id="files" accept="image/*">
@@ -93,5 +93,8 @@
         <button>Update Profile Picture</button>
     </div>
 </form>
+
+{% else %}
+{% endif %}
 
 {% endblock %}

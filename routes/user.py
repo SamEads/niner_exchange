@@ -1,3 +1,5 @@
+from tkinter.constants import FALSE
+
 from flask import Blueprint, render_template, session, redirect,abort,request, url_for, flash
 from data.models import Users,Ratings, Uploads, db
 from utils.helpers import level
@@ -6,7 +8,8 @@ from werkzeug.utils import secure_filename
 
 user_bp = Blueprint('user', __name__)
 
-
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_MIME_TYPES = {'image/png', 'image/jpeg', 'image/gif'}
 # Route to render home page
 @user_bp.route('/')
 def home():
@@ -25,9 +28,12 @@ def user(username):
 
     if request.method == 'POST':
         file = request.files.get('files')
-
         if not file:
             flash('Error: No image uploaded')
+            return redirect(request.url)
+
+        if not allowed_file(file):
+            flash('Error: Invalid file type. Allowed types are png, jpg, jpeg, and gif.')
             return redirect(request.url)
 
         user_id = session.get('user_id')
@@ -41,7 +47,6 @@ def user(username):
         new_image = Uploads(img=file.read(), filename=filename, mimetype=mimetype, user_id=user_id)
         db.session.add(new_image)
         db.session.commit()
-        flash('Successfully changed profile picture!')
 
     # Extract user details
     acc_name = user.username
@@ -56,6 +61,15 @@ def user(username):
     return render_template('user.html', acc_name=acc_name, class_lv=class_lv, member_since=member_since, rating=rating,
                            rate_flag=rate_flag, user_image=user_image)
 
+def allowed_file(file):
+    file_ext = file.filename.rsplit('.', 1)[1].lower() if '.' in file.filename else ''
+    if file_ext not in ALLOWED_EXTENSIONS:
+        return False
+
+    if file.mimetype not in ALLOWED_MIME_TYPES:
+        return False
+
+    return True
 
 @user_bp.route('/listing/<username>/image')
 def get_user_image(username):
