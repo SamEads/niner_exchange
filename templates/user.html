@@ -9,8 +9,12 @@
 {% block content %}
 
 <div class="user-profile">
-    <div class="profile-icon" onclick="document.getElementById('profile').click();">
+    <div class="profile-icon">
+        {% if user_image %}
+        <img src="{{ url_for('user.get_user_image', username=acc_name) }}" alt="{{ acc_name }}'s Profile" style="width: auto; height: 200px;">
+        {% else %}
         <img width="24" height="24" src="https://img.icons8.com/material-rounded/24/user.png" alt="user"/>
+        {% endif %}
     </div>
     <div class="user-info">
         <h2>{{ acc_name }}</h2>
@@ -57,21 +61,21 @@
 
 {% if acc_name != session['username'] and rate_flag %}
 <div class="ratings">
-	<form action="/rate" method="POST" id="rating-form" required>
-		<label for="rating">Rate this user:</label>
-		<select name="rating" id="rating" required>
-			<option value="">Select rating</option>
-			<option value="1">1 Star</option>
-			<option value="2">2 Stars</option>
-			<option value="3">3 Stars</option>
-			<option value="4">4 Stars</option>
-			<option value="5">5 Stars</option>
-		</select>
+    <form action="/rate" method="POST" id="rating-form" required>
+        <label for="rating">Rate this user:</label>
+        <select name="rating" id="rating" required>
+            <option value="">Select rating</option>
+            <option value="1">1 Star</option>
+            <option value="2">2 Stars</option>
+            <option value="3">3 Stars</option>
+            <option value="4">4 Stars</option>
+            <option value="5">5 Stars</option>
+        </select>
 
-        <input type="hidden" name ="rated_user" value="{{ acc_name }}">
+        <input type="hidden" name="rated_user" value="{{ acc_name }}">
 
-		<button type="submit" class="rate-button">Submit Rating</button>
-	</form>
+        <button type="submit" class="rate-button">Submit Rating</button>
+    </form>
 </div>
 {% else %}
 
@@ -81,10 +85,16 @@
     &nbsp;
 </div>
 
-
-<form action="/upload" method="POST" enctype="multipart/form-data">
-    <label for="profile" style="display: none;">Profile Picture:</label>
-    <input type="file" name="profile" id="profile" accept="image/*">
+{% if acc_name == session['username'] %}
+<form action="{{ url_for('user.user', username=acc_name) }}" method="POST" enctype="multipart/form-data">
+    <label for="files">Profile Picture:</label>
+    <input type="file" name="files" id="files" accept="image/*">
+    <div>
+        <button>Update Profile Picture</button>
+    </div>
 </form>
+
+{% else %}
+{% endif %}
 
 {% endblock %}
