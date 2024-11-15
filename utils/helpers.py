@@ -11,7 +11,6 @@ def level(arg: int) -> str:
             return "3rd"
         case 4:
             return "4th"
-        
 
 def format_timestamp(value):
     now = datetime.now(timezone.utc)
