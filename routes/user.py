@@ -1,10 +1,7 @@
-from tkinter.constants import FALSE
-
 from flask import Blueprint, render_template, session, redirect,abort,request, url_for, flash
 from data.models import Users,Ratings, Uploads, db
 from utils.helpers import level
 from werkzeug.utils import secure_filename
-
 
 user_bp = Blueprint('user', __name__)
 
@@ -14,7 +11,6 @@ ALLOWED_MIME_TYPES = {'image/png', 'image/jpeg', 'image/gif'}
 @user_bp.route('/')
 def home():
     return render_template('home.html')
-
 
 # Route to render user page
 @user_bp.route('/user/<username>', methods=['GET', 'POST'])
@@ -59,7 +55,7 @@ def user(username):
 
     # Render user page
     return render_template('user.html', acc_name=acc_name, class_lv=class_lv, member_since=member_since, rating=rating,
-                           rate_flag=rate_flag, user_image=user_image)
+                            rate_flag=rate_flag, user_image=user_image)
 
 def allowed_file(file):
     file_ext = file.filename.rsplit('.', 1)[1].lower() if '.' in file.filename else ''
