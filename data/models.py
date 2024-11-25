@@ -29,6 +29,21 @@ class Users(db.Model):
     def set_password(self, password):
         self.password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
     
+    @staticmethod
+    def get_id_by_username(name):
+            
+            u = db.session.query(Users).filter_by(username=name).first()
+
+            return u.id
+    
+    @staticmethod
+    def get_user(id):
+
+        u = db.session.query(Users).filter_by(id=id).first()
+
+        return u
+        
+    
 
 class Messages(db.Model):
     __tablename__ = 'messages'
@@ -145,17 +160,42 @@ class Friendship(db.Model):
         self.status = status
 
     @staticmethod
+    def check_relationship(user_id, friend_id) -> str:
+    # Check if a friendship record exists between the two users
+        friendship = Friendship.query.filter(
+            ((Friendship.user_id == user_id) & (Friendship.friend_id == friend_id)) |
+            ((Friendship.user_id == friend_id) & (Friendship.friend_id == user_id))
+            ).first()
+
+        if friendship:
+        # If a friendship exists, return its status
+            return friendship.status
+        else:
+        # If no friendship exists between the users, return "not friends"
+            return 'not friends'
+
+    @staticmethod
     def send_friend_request(user_id, friend_id):
-        if user_id != friend_id:
-            friendship = Friendship(user_id=user_id, friend_id=friend_id)
-            db.session.add(friendship)
-            db.session.commit()
-            return friendship
-        return None
+
+        
+        f = Friendship.query.filter_by(user_id=user_id,friend_id=friend_id).first()
+
+        if f or user_id == friend_id:
+            return None
+        
+        friendship = Friendship(user_id=user_id, friend_id=friend_id)
+
+        db.session.add(friendship)
+        db.session.commit()
+        return friendship
 
     @staticmethod
     def accept_friend_request(user_id, friend_id):
-        friendship = Friendship.query.filter_by(user_id=friend_id, friend_id=user_id, status='pending').first()
+        friendship = Friendship.query.filter(
+        ((Friendship.user_id == user_id) & (Friendship.friend_id == friend_id)) | 
+        ((Friendship.user_id == friend_id) & (Friendship.friend_id == user_id))
+        ).filter_by(status='pending').first()
+
         if friendship:
             friendship.status = 'accepted'
             db.session.commit()
@@ -164,7 +204,10 @@ class Friendship(db.Model):
     
     @staticmethod
     def decline_friend_request(user_id, friend_id):
-        friendship = Friendship.query.filter_by(user_id=friend_id, friend_id=user_id, status='pending').first()
+        friendship = Friendship.query.filter(
+        ((Friendship.user_id == user_id) & (Friendship.friend_id == friend_id)) | 
+        ((Friendship.user_id == friend_id) & (Friendship.friend_id == user_id))
+        ).filter_by(status='pending').first()       
         if friendship:
             friendship.status = 'declined'
             db.session.commit()
@@ -182,3 +225,44 @@ class Friendship(db.Model):
             db.session.commit()
             return True
         return False
+    
+
+    @staticmethod
+    def get_requests(user_id):
+         # Query for accepted friendships where the given user is either the user_id or the friend_id
+        friendships = Friendship.query.filter(
+            ((Friendship.user_id == user_id) & (Friendship.status == 'pending')) |
+            ((Friendship.friend_id == user_id) & (Friendship.status == 'pending '))
+        ).all()
+
+        # Extract the friend IDs from the friendships
+        friends = []
+        for friendship in friendships:
+            # If the user is the user_id, the friend is the friend_id, and vice versa
+            if friendship.user_id == user_id:
+                friends.append([friendship,Users.get_user(friendship.friend_id)])
+            else:
+                friends.append([friendship,Users.get_user(friendship.friend_id)])
+
+        return friends
+
+    @staticmethod
+    def get_friends(user_id):
+        # Query for accepted friendships where the given user is either the user_id or the friend_id
+        friendships = Friendship.query.filter(
+            ((Friendship.user_id == user_id) & (Friendship.status == 'accepted')) |
+            ((Friendship.friend_id == user_id) & (Friendship.status == 'accepted'))
+        ).all()
+
+        # Extract the friend IDs from the friendships
+        friends = []
+        for friendship in friendships:
+            # If the user is the user_id, the friend is the friend_id, and vice versa
+            if friendship.user_id == user_id:
+                friends.append(friendship.friend_id)
+            else:
+                friends.append(friendship.user_id)
+
+        
+
+        return [Users.get_user(f) for f in friends]
