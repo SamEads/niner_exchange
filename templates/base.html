@@ -15,8 +15,10 @@
 <body>
 
 <header>
-    <h1 id="header-logo">
-        Niner Exchange
+    <h1 id="header-logo" style="user-select: none;">
+        <a href="/" style="text-decoration: none; color: white;">
+            Niner Exchange
+        </a>
     </h1>
     <div class="topnav">
         <nav>
@@ -48,16 +50,5 @@
 
 <footer>&copy;2024 Niner Exchange. All rights reserved.</footer>
 </body>
-<script>
-    {% with messages = get_flashed_messages() %}
-{% if messages %}
-    let msg = "";
-    {% for message in messages %}
-        msg += "{{ message }}\n"
-    {% endfor %}
-    alert(msg);
-{% endif %}
-{% endwith %}
-</script>
 
 </html>
