@@ -5,7 +5,15 @@
 
 <div class="center_input">
     <div class="header_text">
-        <h2 id="logo_creator"></h2>
+        <h2 id="logo_creator" style="user-select: none;">Niner Exchange</h2>
+        <h2 id="quote_creator" style="user-select: none;"></h2>
+        <noscript>
+            <style>
+                #quote_creator {
+                    display: none;
+                }
+            </style>
+        </noscript>
     </div>
     <form action="/search" method="POST">
         <input type="text" class="text_box" name="query" id="query" required>
@@ -14,30 +22,85 @@
 </div>
 
 <script>
-
-    // Same note as messaging.html, maybe put this in a separate file if / when we add more scripts
     document.addEventListener("DOMContentLoaded", function () {
-        // Can change this to whatever, thought it would be nice to have it be dynamic.
-        const logoText = "Niner Exchange";
-
+        // Logo text
+        let logoText = "Niner Exchange";
         const logoElement = document.getElementById('logo_creator');
+        const quoteTimeout = 8; // In seconds
+
+        logoElement.innerHTML = '';
 
         logoText.split('').forEach((char, index) => {
             const span = document.createElement('span');
-            span.textContent = char === ' ' ? '\u00A0' : char; // (Use non-breaking space for spaces- JS is dumb.)
+            span.textContent = char === ' ' ? '\u00A0' : char;
             span.style.opacity = 0;
             span.style.transform = 'translateY(-10px)';
             span.style.transition = `opacity 1s ease ${index * 0.025}s, transform 1s ease ${index * 0.025}s`;
             logoElement.appendChild(span);
         });
 
-        // Trigger that smooooth animation
         setTimeout(() => {
             logoElement.querySelectorAll('span').forEach(span => {
                 span.style.opacity = 1;
                 span.style.transform = 'translateY(0)';
             });
         }, 100);
+
+        // Quotes
+        const quotes = [
+            "The best way to predict your future is to create it.",
+            "Sharing is the essence of being human.",
+            "One person's treasure is another person's trash.",
+            "Knowledge is power. Sharing it makes us stronger.",
+            "The more you give, the more you get back.",
+            "Simplicity is the ultimate sophistication.",
+            "A penny saved is a penny earned... but a textbook exchanged is a semester saved!",
+            "Do more with less, and help others do the same.",
+            "Helping others is the secret to a happy life.",
+            "Your books can change someone's life.",
+            "Don\'t just share ideas, share resources!",
+            "Knowledge doesn\'t have to be expensive.",
+            "Sometimes the best things in life are free.",
+            "Great things happen when people help each other.",
+            "Your next great idea might be in someone else\'s used book.",
+            "Exchange ideas, exchange knowledge, exchange power.",
+            "The future belongs to those who share.",
+            "A good exchange is more valuable than a good deal.",
+            "Books are the mirrors of the soul, and sometimes they just need to find the right owner.",
+            "A textbook can be more than a resource - it can be a bridge.",
+            "A little generosity goes a long way.",
+            "Don\'t hoard your knowledge, pass it on.",
+            "Helping a friend in need is the best kind of success.",
+            "Success is not about what you have, but what you give.",
+            "Your next step toward success could be just one book away.",
+            "Change begins with sharing.",
+            "Together we rise by lifting others.",
+            "The greatest resource is not the one we own, but the one we share.",
+            "Books can be shared, but knowledge should be passed on.",
+            "Good ideas deserve to be shared. Good books deserve a second chance.",
+        ];
+        const quoteElement = document.getElementById('quote_creator');
+
+        function displayQuote(quote) {
+            quoteElement.innerHTML = '';
+            quote.split('').forEach((char, index) => {
+                const span = document.createElement('span');
+                span.textContent = char === ' ' ? '\u00A0' : char;
+                span.style.opacity = 0;
+                span.style.transform = 'translateY(-10px)';
+                span.style.transition = `opacity 0.8s ease ${index * 0.01}s, transform 0.8s ease ${index * 0.01}s`;
+                quoteElement.appendChild(span);
+            });
+
+            setTimeout(() => {
+                quoteElement.querySelectorAll('span').forEach(span => {
+                    span.style.opacity = 1;
+                    span.style.transform = 'translateY(0)';
+                });
+            }, 100);
+        }
+
+        displayQuote(quotes[Math.floor(Math.random() * quotes.length)]);
 
         // Focus on the search input field on page load
         document.getElementById('query').focus();

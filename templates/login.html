@@ -15,6 +15,13 @@
     <h2 class="user">Password</h2>
     <div class="box password-box">
         <input type="password" id="password" name="password" required>
+        <noscript>
+            <style>
+                .toggle-password {
+                    display: none;
+                }
+            </style>
+        </noscript>
         <span class="toggle-password" onclick="togglePassword()">
             <i id="toggle-password-icon" class="fas fa-eye"></i>
         </span>
@@ -27,16 +34,16 @@
 
 <script>
     function togglePassword() {
-        var passwordField = document.getElementById("password");
-        var togglePasswordIcon = document.getElementById("toggle-password-icon");
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-            togglePasswordIcon.classList.remove("fa-eye");
-            togglePasswordIcon.classList.add("fa-eye-slash");
+        const passwordField = document.getElementById('password');
+        const togglePasswordIcon = document.getElementById('toggle-password-icon');
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            togglePasswordIcon.classList.remove('fa-eye');
+            togglePasswordIcon.classList.add('fa-eye-slash');
         } else {
-            passwordField.type = "password";
-            togglePasswordIcon.classList.remove("fa-eye-slash");
-            togglePasswordIcon.classList.add("fa-eye");
+            passwordField.type = 'password';
+            togglePasswordIcon.classList.remove('fa-eye-slash');
+            togglePasswordIcon.classList.add('fa-eye');
         }
     }
 </script>
