@@ -36,46 +36,46 @@
             </a>
         </div>
     {% endfor %}
-{% else %}
-    <p>No listings found.</p>
-{% endif %}
 
-<div class="pagination">
-    <form method="POST" action="{{ url_for('listing.sorted_listing') }}">
-        <input type="hidden" name="criteria" value="{{ request.form.criteria }}">
-        <input type="hidden" name="order" value="{{ request.form.order }}">
-        {% if listings.has_prev %}
-        <button type="submit" name="page" value="{{ listings.prev_num }}">Previous</button>
-        {% endif %}
-        
-        <!-- Always show the first page button -->
-        <button type="submit" name="page" value="1" class="{% if 1 == listings.page %}current-page{% endif %}">1</button>
-        
-        <!-- Show ellipsis if there are pages between the first page and the current range -->
-        {% if listings.page > 4 %}
-        <span>...</span>
-        {% endif %}
-        
-        <!-- Show the range of pages around the current page -->
-        {% for page_num in range(2, listings.pages) %}
-            {% if page_num >= listings.page - 2 and page_num <= listings.page + 2 %}
-                <button type="submit" name="page" value="{{ page_num }}" class="{% if page_num == listings.page %}current-page{% endif %}">{{ page_num }}</button>
+    {% if listings.pages > 1 %}
+    <div class="pagination">
+        <form method="POST" action="{{ url_for('listing.sorted_listing') }}">
+            <input type="hidden" name="criteria" value="{{ request.form.criteria }}">
+            <input type="hidden" name="order" value="{{ request.form.order }}">
+            {% if listings.has_prev %}
+            <button type="submit" name="page" value="{{ listings.prev_num }}">Previous</button>
             {% endif %}
-        {% endfor %}
-        
-        <!-- Show ellipsis if there are pages between the current range and the last page -->
-        {% if listings.page < listings.pages - 3 %}
-        <span>...</span>
-        {% endif %}
-        
-        <!-- Always show the last page button -->
-        {% if listings.pages > 1 %}
-        <button type="submit" name="page" value="{{ listings.pages }}" class="{% if listings.pages == listings.page %}current-page{% endif %}">{{ listings.pages }}</button>
-        {% endif %}
-        
-        {% if listings.has_next %}
-        <button type="submit" name="page" value="{{ listings.next_num }}">Next</button>
-        {% endif %}
-    </form>
-</div>
+            
+            <!-- Always show the first page button -->
+            <button type="submit" name="page" value="1" class="{% if 1 == listings.page %}current-page{% endif %}">1</button>
+            
+            <!-- Show ellipsis if there are pages between the first page and the current range -->
+            {% if listings.page > 4 %}
+            <span>...</span>
+            {% endif %}
+            
+            <!-- Show the range of pages around the current page -->
+            {% for page_num in range(2, listings.pages) %}
+                {% if page_num >= listings.page - 2 and page_num <= listings.page + 2 %}
+                    <button type="submit" name="page" value="{{ page_num }}" class="{% if page_num == listings.page %}current-page{% endif %}">{{ page_num }}</button>
+                {% endif %}
+            {% endfor %}
+            
+            <!-- Show ellipsis if there are pages between the current range and the last page -->
+            {% if listings.page < listings.pages - 3 %}
+            <span>...</span>
+            {% endif %}
+            
+            <!-- Always show the last page button -->
+            <button type="submit" name="page" value="{{ listings.pages }}" class="{% if listings.pages == listings.page %}current-page{% endif %}">{{ listings.pages }}</button>
+            
+            {% if listings.has_next %}
+            <button type="submit" name="page" value="{{ listings.next_num }}">Next</button>
+            {% endif %}
+        </form>
+    </div>
+    {% endif %}
+{% else %}
+    <h3 style="text-align: center;">No listings found!</h3>
+{% endif %}
 {% endblock %}
