@@ -24,10 +24,11 @@
 
 
 {% if friends_list %}
-<div class = "right">
-    <h2>Friend List</h2>
+<div class="float-right">
+<h2>Friend List</h2>
+<div class="overflow-auto p-3" style="max-width: 300px; max-height: 300px;">
     {% for friend in friends_list %}
-    <div class = "card" >
+    <div class = "card mt-2 mb-2" >
         <div class = "card-body bg-light">
             <h5 class="card-title">{{friend.username}}</h5>
             <h6 class = "card-subtitle mb-3 text-muted">{{friend.class_level}} year student</h6>
@@ -35,9 +36,11 @@
             <a  href="{{ url_for('user.user', username=friend.username) }}" class="stretched-link">{{friend.first_name}}'s page</a>
         </div>
     </div>
-</div>
     {% endfor %}
     {% endif %}
+</div>
+</div>
+
 
 
 <div class="user-profile">
