@@ -21,8 +21,10 @@
 
 {% block content %}
 
+
+
 {% if friends_list %}
-<div class="float-right mt-2">
+<div class = "right">
     <h2>Friend List</h2>
     {% for friend in friends_list %}
     <div class = "card" >
@@ -32,10 +34,10 @@
             <p class = "card-text">{{friend.first_name}}</p>
             <a  href="{{ url_for('user.user', username=friend.username) }}" class="stretched-link">{{friend.first_name}}'s page</a>
         </div>
+    </div>
 </div>
     {% endfor %}
     {% endif %}
-</div>
 
 
 <div class="user-profile">
@@ -46,7 +48,7 @@
         <img width="24" height="24" src="https://img.icons8.com/material-rounded/24/user.png" alt="user"/>
         {% endif %}
     </div>
-    {% if acc_name != session['username'] %}
+    {% if acc_name != session['username'] and friend_flag != 'accepted' %}
         <div class ="float-right">
             <button id = "friend-btn" 
             class="btn btn-success"

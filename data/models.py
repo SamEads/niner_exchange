@@ -265,4 +265,4 @@ class Friendship(db.Model):
 
         
 
-        return [Users.get_user(f) for f in friends]
+        return list(set([Users.get_user(f) for f in friends]))

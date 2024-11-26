@@ -25,3 +25,10 @@
     transition: 0.3s;
 }
 
+.overflow-container {
+    max-height: 400px; /* Set the max height of the container */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #ccc; /* Optional: Add a border for clarity */
+    padding: 10px; /* Optional: Add padding for better visuals */
+    background-color: #f9f9f9; /* Optional: Add background for contrast */
+}
