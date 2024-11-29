@@ -37,7 +37,7 @@ class Messages(db.Model):
     sender = db.Column(db.String(255), db.ForeignKey(Users.username), nullable=False)
     recipient = db.Column(db.String(255), db.ForeignKey(Users.username), nullable=False)
     content = db.Column(db.Text, nullable=False)
-    timestamp = db.Column(db.DateTime, default=datetime.now())
+    timestamp = db.Column(db.DateTime, default=db.func.current_timestamp())
     edited = db.Column(db.Boolean, default=False)
 
     # debug method, can print to webpage without having to use any html
@@ -47,7 +47,7 @@ class Messages(db.Model):
             'user_id': self.user_id,
             'title': self.title,
             'description': self.description,
-            'price': str(self.price),  # Convert Decimal to string for JSON serialization
+            'price': str(self.price),  # convert Decimal to string for JSON serialization
             'img': self.img.decode('utf-8') if isinstance(self.img, bytes) else self.img,
             'name': self.name,
             'mimetype': self.mimetype,
