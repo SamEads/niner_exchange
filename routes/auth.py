@@ -53,6 +53,7 @@ def auth_user():
 def create():
     username = request.form.get('username')
     password = request.form.get('password')
+    class_level = request.form.get('class_level')
 
     user = Users.query.filter_by(username=username).first()
     sesh_usr = session.get('username')
@@ -67,13 +68,13 @@ def create():
 
     # Hash password & create new user
     hashed_password = bcrypt.generate_password_hash(password, 12).decode('utf-8')
-    new_user = Users(username, hashed_password)
+    new_user = Users(username, hashed_password, class_level)
 
     session['user_id'] = new_user.id
     session['username'] = username  # Set session username
     db.session.add(new_user)        # Add new user to database
     db.session.commit()             # Commit changes to database
-    
+
     # Redirect
     return redirect(url_for('user.user',username = new_user.username))
 
