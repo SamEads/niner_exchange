@@ -104,7 +104,7 @@ def kill_user():
 def search():
     if request.method == 'POST':
 
-        session['usr_query'] = request.form.get('query') or session.get('usr_query')
+        session['usr_query'] = session.get('usr_query')
 
         return redirect(url_for('user.search_usr', page_num=1))
    
@@ -113,7 +113,7 @@ def search():
 @user_bp.route('/user_search/<int:page_num>', methods=["GET","POST"])
 def search_usr(page_num):
 
-    query = session.get('usr_query') or request.args.get('query')
+    query = request.args.get('query')
     session['usr_query'] = query
 
     if not query: 
