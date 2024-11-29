@@ -50,5 +50,15 @@
 
 <footer>&copy;2024 Niner Exchange. All rights reserved.</footer>
 </body>
-
+<script>
+    {% with messages = get_flashed_messages() %}
+{% if messages %}
+    let msg = "";
+    {% for message in messages %}
+        msg += "{{ message }}\n"
+    {% endfor %}
+    alert(msg);
+{% endif %}
+{% endwith %}
+</script>
 </html>
