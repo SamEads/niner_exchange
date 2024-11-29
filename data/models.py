@@ -18,13 +18,13 @@ class Users(db.Model):
     created_at = db.Column(db.DateTime, default=date.today())  # Account creation timestamp
     updated_at = db.Column(db.DateTime, default=date.today(), onupdate=date.today())  # Last update timestamp
 
-    def __init__(self, username, password_hash):
+    def __init__(self, username, password_hash, class_level):
         self.username = username
         self.password_hash = password_hash
         self.first_name = "Placeholder Name"
         self.email = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(5)) + '@' + ''.join(
             random.choice(string.ascii_letters + string.digits) for _ in range(5))
-        self.class_level = 1
+        self.class_level = class_level
 
     def set_password(self, password):
         self.password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
