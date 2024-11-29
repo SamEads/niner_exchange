@@ -53,7 +53,7 @@ def createListing():
 
 
 def allowed_file(file):
-    file_ext = file.name.rsplit('.', 1)[1].lower() if '.' in file.name else ''
+    file_ext = file.filename.rsplit('.', 1)[1].lower() if '.' in file.filename else ''
     if file_ext not in ALLOWED_EXTENSIONS:
         return False
 
