@@ -4,9 +4,44 @@
 
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='user.css') }}"/>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<!-- <script type=text/javascript>
+    $(function() {
+      $('friend-btn').on('click', function(e) {
+        e.preventDefault()
+        $.getJSON('/friend_request',
+            function(data) {
+        });
+        return false;
+      });
+    });
+</script>-->
 {% endblock %}
 
 {% block content %}
+
+
+
+{% if friends_list %}
+<div class="float-right">
+<h2>Friend List</h2>
+<div class="overflow-auto p-3" style="max-width: 300px; max-height: 300px;">
+    {% for friend in friends_list %}
+    <div class = "card mt-2 mb-2" >
+        <div class = "card-body bg-light">
+            <h5 class="card-title">{{friend.username}}</h5>
+            <h6 class = "card-subtitle mb-3 text-muted">{{friend.class_level}} year student</h6>
+            <p class = "card-text">{{friend.first_name}}</p>
+            <a  href="{{ url_for('user.user', username=friend.username) }}" class="stretched-link">{{friend.first_name}}'s page</a>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+</div>
+
+
 
 <div class="user-profile">
     <div class="profile-icon">
@@ -16,6 +51,15 @@
         <img width="24" height="24" src="https://img.icons8.com/material-rounded/24/user.png" alt="user"/>
         {% endif %}
     </div>
+    {% if acc_name != session['username'] and friend_flag != 'accepted' %}
+        <div class ="float-right">
+            <button id = "friend-btn" 
+            class="btn btn-success"
+            data-other-id="{{acc_name}}"> AHHHHHHHHH </button>
+            <h2>{{friend_flag}}</h2>
+        </div>
+    {% endif %}
+
     <div class="user-info">
         <h2>{{ acc_name }}</h2>
         <p>{{ class_lv }} year student at UNC Charlotte</p>
@@ -44,7 +88,7 @@
 </div>
 
 {% if acc_name == session['username'] %}
-<div>
+<div div="button-box">
     <form action="/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete your account?');">
         <button class="btn btn-danger" type="submit">
             Delete Account
@@ -58,6 +102,7 @@
 <div>
     &nbsp;
 </div>
+
 
 {% if acc_name != session['username'] and rate_flag %}
 <div class="ratings">

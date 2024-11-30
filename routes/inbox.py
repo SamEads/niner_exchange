@@ -1,7 +1,7 @@
 # routes/inbox.py
 
 from flask import Blueprint, render_template, session, redirect, url_for, flash
-from data.models import Users, Messages, db
+from data.models import Users,Friendship, Messages, db
 from sqlalchemy import func, or_, and_
 
 # Create blueprint for inbox related routes
@@ -38,4 +38,6 @@ def inbox():
         Messages.timestamp.desc()
     )
 
-    return render_template('inbox.html', conversations=latest_messages)
+    requests = Friendship.get_requests(session.get('user_id'))
+
+    return render_template('inbox.html', conversations=latest_messages,requests = requests)
