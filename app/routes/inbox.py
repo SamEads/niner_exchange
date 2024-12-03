@@ -1,9 +1,9 @@
 # routes/inbox.py
 
 from flask import Blueprint, render_template, session, redirect, url_for, flash
-from data.models import Users, Messages
+from ..data.models import Users, Messages
 from sqlalchemy import func, or_, and_
-from utils.helpers import db
+from ..utils.helpers import db
 
 # Create blueprint for inbox related routes
 inbox_bp = Blueprint('inbox', __name__)

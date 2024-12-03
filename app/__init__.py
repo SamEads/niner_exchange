@@ -1,9 +1,6 @@
 from flask import Flask
-from flask_bcrypt import Bcrypt
-from utils.helpers import db,bcrypt
-from config import Config,TestingConfig
-from routes import register_blueprints
-from utils.helpers import register_filters
+from app.utils.helpers import db,bcrypt,register_filters
+from app.config import Config,TestingConfig
 import os
 from sqlalchemy import text
 
@@ -20,8 +17,10 @@ def create_app():
          app.config.from_object(Config)
         
     bcrypt.init_app(app)
+    db.init_app(app)
 
 
+    
     with app.app_context():
         try: 
               db.session.execute(text('SELECT 1'))
@@ -30,7 +29,6 @@ def create_app():
     
             print(f"Database connection failed {e}")
 
-    db.init_app(app)
     register_filters(app)
 
     register_blueprints(app)
@@ -42,19 +40,19 @@ def create_app():
 def register_blueprints(app):
 
     from .routes import (
-    auth_bp,
-    user_bp,
-    listing_bp,
-    messaging_bp,
-    inbox_bp,
-    setting_bp,
-    info_bp
+    auth,
+    user,
+    listing,
+    messaging,
+    inbox,
+    setting,
+    info
     )
 
-    app.register_blueprint(auth_bp)
-    app.register_blueprint(user_bp)
-    app.register_blueprint(listing_bp)
-    app.register_blueprint(messaging_bp)
-    app.register_blueprint(inbox_bp)
-    app.register_blueprint(setting_bp)
-    app.register_blueprint(info_bp)
+    app.register_blueprint(auth.auth_bp)
+    app.register_blueprint(user.user_bp)
+    app.register_blueprint(listing.listing_bp)
+    app.register_blueprint(messaging.messaging_bp)
+    app.register_blueprint(inbox.inbox_bp)
+    app.register_blueprint(setting.setting_bp)
+    app.register_blueprint(info.info_bp)

@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import date, datetime
 import bcrypt
-from utils.helpers import db
+from ..utils.helpers import db
 
 import random, string
 

@@ -1,6 +1,6 @@
 from flask import Blueprint, request, flash, session, redirect, abort, render_template, url_for
-from data.models import Users
-from utils.helpers import db,bcrypt
+from ..data.models import Users
+from ..utils.helpers import db,bcrypt
 
 # Create blueprint for authentication related routes
 auth_bp = Blueprint('auth', __name__)

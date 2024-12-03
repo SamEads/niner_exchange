@@ -1,5 +1,6 @@
 from flask import Blueprint, request, session, redirect, render_template,url_for,flash
-from data.models import Users,Messages,Ratings,db
+from ..data.models import Users,Messages,Ratings
+from ..utils.helpers import db
 
 
 info_bp =  Blueprint('info', __name__)
