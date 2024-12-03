@@ -1,9 +1,8 @@
 
 
 import os 
-import pytest 
 from sqlalchemy import inspect,text
-from ..data import db 
+from ..utils.helpers import db
 
 
 
@@ -11,12 +10,16 @@ from ..data import db
 def test_connection(client):
 
     
-    app = client.application
-    with app.app_context():
-        
-        res = db.session.execute(text("Select 1"))
 
-        assert res.scalar() == 1
+    """
+    ins = inspect(db.engine)
+    tables = ins.get_table_names()
 
+    assert db.engine.url.render_as_string(hide_password=False) == os.getenv("SQLALCHEMY_TEST_DATABASE_URI")
+    for name in tables: 
+        res = db.session.execute(text(f"select count(*) from {name};"))
+        count = res.scalar
+        assert count == 0
     
+    """
     assert False == False

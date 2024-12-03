@@ -3,24 +3,31 @@ from app.utils.helpers import db,bcrypt,register_filters
 from app.config import Config,TestingConfig
 import os
 from sqlalchemy import text
+from dotenv import load_dotenv
+
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object(TestingConfig if app.config['TESTING'] else Config)
-    
-    print(f"\n\n{os.getenv('DB_CON_STR')}\n\n") 
 
+    
+    
+    #load_dotenv()
     if os.environ.get('FLASK_ENV') == 'testing':
-            app.config.from_object(TestingConfig)
-            app.app_context().push()
+
+        app.config.from_object(TestingConfig)
+        app.app_context().push()
+        print("accessed")
     else: 
          app.config.from_object(Config)
-        
-    bcrypt.init_app(app)
+
+
+    #print(f"\n\n\n{app.config.get('SQLALCHEMY_DATABASE_URI')} {app.config["TESTING"]} {os.environ.get("FLASK_ENV")} {os.getenv("TEST_DB_CON_STR")}\n\n\n")
     db.init_app(app)
 
-
     
+    bcrypt.init_app(app)
+
+
     with app.app_context():
         try: 
               db.session.execute(text('SELECT 1'))
@@ -30,7 +37,6 @@ def create_app():
             print(f"Database connection failed {e}")
 
     register_filters(app)
-
     register_blueprints(app)
 
     return app

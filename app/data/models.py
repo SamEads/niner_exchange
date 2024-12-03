@@ -1,10 +1,8 @@
-from flask_sqlalchemy import SQLAlchemy
 from datetime import date, datetime
 import bcrypt
 from ..utils.helpers import db
 
 import random, string
-
 
 class Users(db.Model):
     __tablename__ = 'users'

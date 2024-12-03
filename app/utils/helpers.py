@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta, timezone
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+#from app import app
 
 
 db = SQLAlchemy()
