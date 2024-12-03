@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, session, redirect,abort,request, url_for, flash
-from data.models import Users,Ratings, Uploads, db
-from utils.helpers import level
+from data.models import Users,Ratings, Uploads
+from utils.helpers import level,db
 from werkzeug.utils import secure_filename
+
 
 user_bp = Blueprint('user', __name__)
 

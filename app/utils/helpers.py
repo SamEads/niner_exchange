@@ -1,4 +1,10 @@
 from datetime import datetime, timedelta, timezone
+from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
+
+
+db = SQLAlchemy()
+bcrypt = Bcrypt()
 
 # Grade level of student
 def level(arg: int) -> str:

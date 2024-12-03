@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, session, redirect,abort, request, flash
 from data.models import Users,Ratings
 from utils.helpers import level
-from data.models import Users, db
+from data.models import Users
+from utils.helpers import db
 
 
 setting_bp = Blueprint('setting', __name__)
