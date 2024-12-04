@@ -30,3 +30,24 @@ def format_timestamp(value):
 
 def register_filters(app):
     app.jinja_env.filters['format_timestamp'] = format_timestamp
+
+
+def register_blueprints(app):
+
+    from ..routes import (
+    auth,
+    user,
+    listing,
+    messaging,
+    inbox,
+    setting,
+    info
+    )
+
+    app.register_blueprint(auth.auth_bp)
+    app.register_blueprint(user.user_bp)
+    app.register_blueprint(listing.listing_bp)
+    app.register_blueprint(messaging.messaging_bp)
+    app.register_blueprint(inbox.inbox_bp)
+    app.register_blueprint(setting.setting_bp)
+    app.register_blueprint(info.info_bp)
