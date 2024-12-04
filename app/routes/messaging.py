@@ -1,5 +1,6 @@
 from flask import Blueprint, request, session, redirect, render_template, url_for, flash
-from data.models import Users, Messages, db
+from ..data.models import Users, Messages
+from.. utils.helpers import db
 
 # Create blueprint for messaging related routes
 messaging_bp = Blueprint('messaging', __name__)
