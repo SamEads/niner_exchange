@@ -2,7 +2,7 @@ from ..data.models import Users,Friendship
 
 
 
-def check_friendship(client,other_client):
+def test_friendship(client,other_client):
 
 
     user1 = {
@@ -29,23 +29,4 @@ def check_friendship(client,other_client):
     status = Friendship.check_relationship(i_1,i_2)
 
     assert status == "accepted"
-
-
-    
-
-
-
-
-
-
-    
-
-    
-
-
-    
-
-
-
-
 
