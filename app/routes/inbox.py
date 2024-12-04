@@ -39,4 +39,6 @@ def inbox():
         Messages.timestamp.desc()
     )
 
-    return render_template('inbox.html', conversations=latest_messages)
+    requests = Friendship.get_requests(session.get('user_id'))
+
+    return render_template('inbox.html', conversations=latest_messages,requests = requests)

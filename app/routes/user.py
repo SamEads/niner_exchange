@@ -51,12 +51,13 @@ def user(username):
     member_since = str(user.created_at)[:4]
     rating = Ratings.get_rating(user.id)
     rate_flag = Ratings.allow_rating(session['username'], acc_name)
-
+    friend_flag = Friendship.check_relationship(session['user_id'],user.id)
+    friends_list = Friendship.get_friends(user.id)
     user_image = Uploads.query.filter_by(user_id=user.id).order_by(Uploads.id.desc()).first()
 
     # Render user page
     return render_template('user.html', acc_name=acc_name, class_lv=class_lv, member_since=member_since, rating=rating,
-                            rate_flag=rate_flag, user_image=user_image)
+                            rate_flag=rate_flag, user_image=user_image,friend_flag=friend_flag,friends_list=friends_list)
 
 def allowed_file(file):
     file_ext = file.filename.rsplit('.', 1)[1].lower() if '.' in file.filename else ''
@@ -129,3 +130,76 @@ def search_usr(page_num):
     for k in res: 
         k.class_level = level(k.class_level)
     return render_template('show_user.html',users=res,query=query)
+    
+
+@user_bp.route('/friend_request', methods=["POST"])
+def friend_request():
+
+    data = request.get_json()
+    name = data['otherId']
+
+    friend_id = Users.get_id_by_username(name)
+    user_id = session.get('user_id')
+
+    f = Friendship.send_friend_request(user_id=user_id,friend_id=friend_id)
+
+    if f:
+        return jsonify(f.status)
+    else:
+        return jsonify("Success")    
+
+
+@user_bp.route('/deny_friend',methods=['post'])
+def deny():
+    name = request.form.get("username")
+    curr_id = session.get('user_id')
+
+    name_id = Users.get_id_by_username(name)
+    if not name_id:
+        print("name_id is none")
+        return abort(404)
+
+
+    f = Friendship.decline_friend_request(curr_id,name_id)
+
+    if f:
+        return redirect(url_for('inbox.inbox'))
+    else:
+        print("friendship value is none")
+
+        abort(404)
+   
+    
+
+@user_bp.route('/accept_friend',methods=['post'])
+def accept():
+    
+    name = request.form.get("username")
+    curr_id = session.get('user_id')
+
+    name_id = Users.get_id_by_username(name)
+    
+    if not name_id:
+        print("name_id is none")
+        return abort(404)
+
+
+    f = Friendship.accept_friend_request(curr_id,name_id)
+
+    if f:
+        return redirect(url_for('inbox.inbox'))
+    else:
+        print("friendship value is none")
+        abort(404)
+
+    
+
+
+
+    
+
+
+
+
+    
+

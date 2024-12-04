@@ -1,10 +1,10 @@
 -- Reset tables
+TRUNCATE TABLE Friendships RESTART IDENTITY;
 TRUNCATE TABLE Ratings RESTART IDENTITY;
 TRUNCATE TABLE Listings RESTART IDENTITY;
 TRUNCATE TABLE Users RESTART IDENTITY CASCADE;
-TRUNCATE TABLE ratings RESTART IDENTITY;
 
--- Insert users
+-- Insert initial users
 INSERT INTO Users (username, first_name, email, password_hash, class_level) VALUES
 ('jdoe', 'John', 'jdoe@example.com', '$2y$12$FOIyR6PWmanG4pbVJw4tmOsA4zPrFOVTaDtEcX9qkFU0rwjOM/GEu', 1), -- Hashed password example
 ('asmith', 'Alice', 'asmith@example.com', 'hashed_password_2', 2),
@@ -17,7 +17,7 @@ INSERT INTO Users (username, first_name, email, password_hash, class_level) VALU
 ('hlee', 'Hank', 'hlee@example.com', 'hashed_password_9', 1),
 ('ijones', 'Ivy', 'ijones@example.com', 'hashed_password_10', 2);
 
--- Generate additional user records up to 500
+-- Generate additional users up to 500
 DO $$
 BEGIN
     FOR i IN 11..500 LOOP
@@ -32,28 +32,86 @@ BEGIN
     END LOOP;
 END $$;
 
--- Insert ratings for initial users
-INSERT INTO Ratings (user_id, rater_id, rating) VALUES
-(1, 2, 5), (1, 3, 3), (1, 4, 4),
-(2, 1, 4), (2, 5, 3), (3, 1, 2),
-(3, 2, 4), (4, 3, 5), (5, 6, 2),
-(6, 7, 3), (7, 8, 4), (8, 9, 5),
-(9, 10, 1), (10, 1, 3);
-
--- Generate additional random ratings
+-- Add 10 friends to jdoe's friends list
 DO $$
+DECLARE
+    user_id_jdoe INT;
+    random_user_id INT;
 BEGIN
-    FOR i IN 1..5000 LOOP
-        INSERT INTO Ratings (user_id, rater_id, rating)
-        VALUES (
-            (FLOOR(random() * 500 + 1))::int,  -- Random user_id between 1 and 500
-            (FLOOR(random() * 500 + 1))::int,  -- Random rater_id between 1 and 500
-            FLOOR((random() * 5 + 1))::int     -- Random rating between 1 and 5
-        )
-        ON CONFLICT DO NOTHING;
+    -- Get jdoe's user ID
+    SELECT id INTO user_id_jdoe FROM Users WHERE username = 'jdoe';
+
+    -- Add 10 unique friends for jdoe
+    FOR i IN 1..10 LOOP
+        LOOP
+            -- Select a random user who is not already a friend and not jdoe
+            SELECT id INTO random_user_id
+            FROM Users
+            WHERE id != user_id_jdoe
+              AND id NOT IN (
+                  SELECT friend_id FROM Friendships WHERE user_id = user_id_jdoe
+              )
+              ORDER BY RANDOM()
+              LIMIT 1;
+
+            EXIT WHEN random_user_id IS NOT NULL;
+
+        END LOOP;
+
+        -- Insert friendship for jdoe
+        INSERT INTO Friendships (user_id, friend_id, status)
+        VALUES (user_id_jdoe, random_user_id, 'accepted');
+
+        -- Insert reciprocal friendship for the friend
+        INSERT INTO Friendships (user_id, friend_id, status)
+        VALUES (random_user_id, user_id_jdoe, 'accepted');
     END LOOP;
 END $$;
 
--- Select to verify data
-SELECT * FROM Users LIMIT 10;
-SELECT * FROM Ratings LIMIT 10;
+-- Add 10 friends to asmith's friends list
+DO $$
+DECLARE
+    user_id_asmith INT;
+    random_user_id INT;
+BEGIN
+    -- Get asmith's user ID
+    SELECT id INTO user_id_asmith FROM Users WHERE username = 'asmith';
+
+    -- Add 10 unique friends for asmith
+    FOR i IN 1..10 LOOP
+        LOOP
+            -- Select a random user who is not already a friend and not asmith
+            SELECT id INTO random_user_id
+            FROM Users
+            WHERE id != user_id_asmith
+              AND id NOT IN (
+                  SELECT friend_id FROM Friendships WHERE user_id = user_id_asmith
+              )
+              ORDER BY RANDOM()
+              LIMIT 1;
+
+            EXIT WHEN random_user_id IS NOT NULL;
+
+        END LOOP;
+
+        -- Insert friendship for asmith
+        INSERT INTO Friendships (user_id, friend_id, status)
+        VALUES (user_id_asmith, random_user_id, 'accepted');
+
+        -- Insert reciprocal friendship for the friend
+        INSERT INTO Friendships (user_id, friend_id, status)
+        VALUES (random_user_id, user_id_asmith, 'accepted');
+    END LOOP;
+END $$;
+
+-- Verify jdoe's friends
+SELECT u.username AS friend_username
+FROM Friendships f
+JOIN Users u ON f.friend_id = u.id
+WHERE f.user_id = (SELECT id FROM Users WHERE username = 'jdoe') AND f.status = 'accepted';
+
+-- Verify asmith's friends
+SELECT u.username AS friend_username
+FROM Friendships f
+JOIN Users u ON f.friend_id = u.id
+WHERE f.user_id = (SELECT id FROM Users WHERE username = 'asmith') AND f.status = 'accepted';
