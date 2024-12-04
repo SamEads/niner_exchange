@@ -100,4 +100,4 @@ CREATE TABLE Friendships (
     FOREIGN KEY (friend_id) REFERENCES Users(id) ON DELETE CASCADE,
     UNIQUE (user_id, friend_id)    -- Ensures no duplicate friendships
 );
-
+ 

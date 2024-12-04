@@ -1,4 +1,9 @@
 {% block head %}
+<script src="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0-alpha1/js/bootstrap.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
 <link rel="stylesheet" href="{{ url_for('static', filename='inbox.css') }}" />
 {% endblock %}
 {% extends "base.html" %}
@@ -15,5 +20,26 @@
         </div>
     </a>
     {% endfor %}
+</div>
+{% if requests %}
+<div class="float-right">
+    <h2>Friend Requests</h2>
+    {% for req in requests %}
+    <div class="dropdown">
+        <button class="dropbtn"> {{req[1].username}} </button>
+        <div class="dropdown-content">
+            <form action ="{{ url_for('user.accept') }}" method="POST">
+                <input type="hidden" name="username" value="{{req[1].username}}">
+                <button type="submit" class="btn btn-outline-success">Accept</button>
+            </form>
+
+            <form action ="{{ url_for('user.deny') }}" method="POST">
+                <input type="hidden" name="username" value="{{req[1].username}}">
+                <button type="submit" class="btn btn-outline-danger">Deny</button>
+            </form>
+        </div>
+      </div>
+    {% endfor %}
+    {% endif %}
 </div>
 {% endblock %}
