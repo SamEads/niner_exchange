@@ -32,6 +32,23 @@ BEGIN
     END LOOP;
 END $$;
 
+TRUNCATE TABLE Listings RESTART IDENTITY;
+
+-- Insert fake listings
+INSERT INTO Listings (user_id, title, description, price, img, name, mimetype) VALUES
+(1, 'Cozy Apartment Downtown', 'A cozy 1-bedroom apartment in the heart of the city.', 1200.00, 'path/to/image1.png', 'image1.png', 'image/png'),
+(1, 'Spacious House with Garden', 'A beautiful 4-bedroom house with a large garden.', 2500.00, 'path/to/image2.png', 'image2.png', 'image/png'),
+(2, 'Modern Studio', 'A modern studio with a stunning view.', 900.00, 'path/to/image3.png', 'image3.png', 'image/png'),
+(2, 'Luxury Condo', 'A luxury condo with all amenities included.', 1800.00, 'path/to/image4.png', 'image4.png', 'image/png'),
+(3, 'Charming Cottage', 'A charming 2-bedroom cottage near the park.', 1500.00, 'path/to/image5.png', 'image5.png', 'image/png'),
+(3, 'Loft in Artistic Neighborhood', 'An artistic loft in a vibrant neighborhood.', 1600.00, 'path/to/image6.png', 'image6.png', 'image/png'),
+(4, 'Penthouse with Rooftop', 'A stunning penthouse with a private rooftop terrace.', 3000.00, 'path/to/image7.png', 'image7.png', 'image/png'),
+(5, 'Affordable Room for Rent', 'A clean room for rent in a friendly neighborhood.', 500.00, 'path/to/image8.png', 'image8.png', 'image/png'),
+(6, 'Family Home with Pool', 'A spacious family home with a large swimming pool.', 2200.00, 'path/to/image9.png', 'image9.png', 'image/png'),
+(7, 'Quiet Cabin in the Woods', 'A peaceful cabin for a weekend getaway.', 700.00, 'path/to/image10.png', 'image10.png', 'image/png');
+
+-- Ensure img, name, and mimetype are now provided
+
 -- Add 10 friends to jdoe's friends list
 DO $$
 DECLARE
@@ -104,14 +121,72 @@ BEGIN
     END LOOP;
 END $$;
 
--- Verify jdoe's friends
-SELECT u.username AS friend_username
-FROM Friendships f
-JOIN Users u ON f.friend_id = u.id
-WHERE f.user_id = (SELECT id FROM Users WHERE username = 'jdoe') AND f.status = 'accepted';
+DO $$ 
+DECLARE
+    user_id_jdoe INT;
+    random_user_id INT;
+BEGIN
+    -- Get jdoe's user ID
+    SELECT id INTO user_id_jdoe FROM Users WHERE username = 'jdoe';
 
--- Verify asmith's friends
-SELECT u.username AS friend_username
-FROM Friendships f
-JOIN Users u ON f.friend_id = u.id
-WHERE f.user_id = (SELECT id FROM Users WHERE username = 'asmith') AND f.status = 'accepted';
+    -- Add 10 random pending friend requests to jdoe
+    FOR i IN 1..10 LOOP
+        LOOP
+            -- Select a random user who is not already a friend and not jdoe
+            SELECT id INTO random_user_id
+            FROM Users
+            WHERE id != user_id_jdoe
+              AND id NOT IN (
+                  SELECT friend_id FROM Friendships WHERE user_id = user_id_jdoe
+              )
+              AND id NOT IN (
+                  SELECT user_id FROM Friendships WHERE friend_id = user_id_jdoe
+              )
+              ORDER BY RANDOM()
+              LIMIT 1;
+
+            EXIT WHEN random_user_id IS NOT NULL;
+        END LOOP;
+
+        -- Insert a pending friendship request for jdoe
+        INSERT INTO Friendships (user_id, friend_id, status)
+        VALUES (random_user_id, user_id_jdoe, 'pending');
+    END LOOP;
+END $$;
+
+
+
+DO $$ 
+DECLARE
+    user_id_jdoe INT;
+    random_user_id INT;
+    message_content TEXT;
+BEGIN
+    -- Get jdoe's user ID
+    SELECT id INTO user_id_jdoe FROM Users WHERE username = 'jdoe';
+
+    -- Generate 10 random messages for jdoe
+    FOR i IN 1..10 LOOP
+        LOOP
+            -- Select a random user who is not jdoe
+            SELECT id INTO random_user_id
+            FROM Users
+            WHERE id != user_id_jdoe
+            ORDER BY RANDOM()
+            LIMIT 1;
+
+            EXIT WHEN random_user_id IS NOT NULL;
+        END LOOP;
+
+        -- Generate a random message content (simple example)
+        message_content := 'Hello jdoe, this is a message from user ' || random_user_id || '.';
+
+        -- Insert the message
+        INSERT INTO Messages (sender, recipient, content)
+        VALUES (
+            (SELECT username FROM Users WHERE id = random_user_id),
+            'jdoe',
+            message_content
+        );
+    END LOOP;
+END $$;

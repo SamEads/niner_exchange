@@ -10,6 +10,53 @@
 {% block title %}Inbox{% endblock %}
 {% block content %}
 <h1>Inbox</h1>
+{% if requests %}
+<div class = "container">
+    <div class = "row align-items-start">
+        <div class = "col-sm-9">
+            <div class="inbox-container">
+                {% for message in conversations %}
+                <a href="{{ url_for('messaging.view_messages', recipient=(message.sender if message.sender != session['username'] else message.recipient)) }}" class="conversation-link">
+                    <div class="conversation">
+                        <h2>{{ message.sender if message.sender != session['username'] else message.recipient }}</h2>
+                        <p>{{ message.content }}</p>
+                        <small class="timestamp">{{ message.timestamp|format_timestamp }}</small>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+
+    <div class=" col">
+        <h3>Friend Requests</h3>
+        <div class="overflow-auto p-3" style="max-width: 250px; max-height: 300px;">
+            {% for req in requests%}
+            <div class="card bg-light mb-3" style="width:auto;">
+                <img src="{{ url_for('user.get_user_image', username=req[1].username) }}" alt="{{ req[1].username }}'s Profile Pic" style="width: auto; height:auto;">
+                    <div class="card-body">
+                        <h5 class="cart-title"><a  href="{{ url_for('user.user', username=req[1].username) }}">{{req[1].first_name}}'s page</a>
+                        </h5>
+                        <p class="card-text">{{req[1].class_lv}}</p>
+                        <div class = "btn-group" role="group">
+                            <form action ="{{ url_for('user.accept') }}" method="POST">
+                                <input type="hidden" name="username" value="{{req[1].username}}">
+                                <button type="submit" class="btn btn-outline-success btn-sm border-0">Accept</button>
+                            </form>
+                            <form action ="{{ url_for('user.deny') }}" method="POST">
+                                <input type="hidden" name="username" value="{{req[1].username}}">
+                                <button type="submit" class="btn btn-outline-danger btn-sm border-0">Deny</button>
+                            </form>
+                        </div>
+                    </div>       
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</div>
+
+{% else %}
 <div class="inbox-container">
     {% for message in conversations %}
     <a href="{{ url_for('messaging.view_messages', recipient=(message.sender if message.sender != session['username'] else message.recipient)) }}" class="conversation-link">
@@ -21,25 +68,5 @@
     </a>
     {% endfor %}
 </div>
-{% if requests %}
-<div class="float-right">
-    <h2>Friend Requests</h2>
-    {% for req in requests %}
-    <div class="dropdown">
-        <button class="dropbtn"> {{req[1].username}} </button>
-        <div class="dropdown-content">
-            <form action ="{{ url_for('user.accept') }}" method="POST">
-                <input type="hidden" name="username" value="{{req[1].username}}">
-                <button type="submit" class="btn btn-outline-success">Accept</button>
-            </form>
-
-            <form action ="{{ url_for('user.deny') }}" method="POST">
-                <input type="hidden" name="username" value="{{req[1].username}}">
-                <button type="submit" class="btn btn-outline-danger">Deny</button>
-            </form>
-        </div>
-      </div>
-    {% endfor %}
-    {% endif %}
-</div>
+{% endif %}
 {% endblock %}

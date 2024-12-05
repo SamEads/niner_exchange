@@ -20,6 +20,10 @@ def app():
 def client(app):
     return app.test_client()
 
+@pytest.fixture()
+def other_client(app):
+    return app.test_client()
+
 
 @pytest.fixture()
 def runner(app):
@@ -29,9 +33,9 @@ def clear_database():
     # SQL to truncate all tables in the Test_Niner_Ex schema
 
     try:
-            with open("wipe_data.sql","r") as clear_procedure:
-                db.session.execute(text(clear_procedure.read()))
-                db.session.commit()  # Commit the changes to the database
+        with open("wipe_data.sql","r") as clear_procedure:
+            db.session.execute(text(clear_procedure.read()))
+            db.session.commit()  # Commit the changes to the database
     except Exception as e: 
         db.session.rollback()
         raise e
