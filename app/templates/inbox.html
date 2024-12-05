@@ -21,11 +21,43 @@
     </a>
     {% endfor %}
 </div>
+
 {% if requests %}
+    <div class="float-right">
+        <h3>Friend Requests</h3>
+        <div class="overflow-auto p-3" style="max-width: 250px; max-height: 300px;">
+            {% for req in requests%}
+            <div class="card bg-light mb-3" style="width:auto;">
+                <img src="{{ url_for('user.get_user_image', username=req[1].username) }}" alt="{{ req[1].username }}'s Profile Pic" style="width: auto; height:auto;">
+                    <div class="card-body">
+                        <h5 class="cart-title"><a  href="{{ url_for('user.user', username=req[1].username) }}">{{req[1].first_name}}'s page</a>
+                        </h5>
+                        <p class="card-text">{{req[1].class_lv}}</p>
+                        <div class = "btn-group" role="group">
+                            <form action ="{{ url_for('user.accept') }}" method="POST">
+                                <input type="hidden" name="username" value="{{req[1].username}}">
+                                <button type="submit" class="btn btn-outline-success btn-sm border-0">Accept</button>
+                            </form>
+                            <form action ="{{ url_for('user.deny') }}" method="POST">
+                                <input type="hidden" name="username" value="{{req[1].username}}">
+                                <button type="submit" class="btn btn-outline-danger btn-sm border-0">Deny</button>
+                            </form>
+                        </div>
+                    </div>       
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+<!--
+
+    {% if requests %}
 <div class="float-right">
-    <h2>Friend Requests</h2>
+    <h3>Friend Requests</h3>
+    <div class="overflow-auto p-3" style="max-width: 150px; max-height: 300px;">
     {% for req in requests %}
-    <div class="dropdown">
+    <div class="dropdown mb-2">
         <button class="dropbtn"> {{req[1].username}} </button>
         <div class="dropdown-content">
             <form action ="{{ url_for('user.accept') }}" method="POST">
@@ -40,6 +72,9 @@
         </div>
       </div>
     {% endfor %}
+    </div>
     {% endif %}
+
+-->
 </div>
 {% endblock %}

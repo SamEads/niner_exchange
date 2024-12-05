@@ -1,7 +1,7 @@
 # routes/inbox.py
 
 from flask import Blueprint, render_template, session, redirect, url_for, flash
-from ..data.models import Users, Messages
+from ..data.models import Users, Messages,Friendship
 from sqlalchemy import func, or_, and_
 from ..utils.helpers import db
 

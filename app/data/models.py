@@ -227,20 +227,18 @@ class Friendship(db.Model):
 
     @staticmethod
     def get_requests(user_id):
+
          # Query for accepted friendships where the given user is either the user_id or the friend_id
         friendships = Friendship.query.filter(
-            ((Friendship.user_id == user_id) & (Friendship.status == 'pending')) |
-            ((Friendship.friend_id == user_id) & (Friendship.status == 'pending '))
+            ((Friendship.friend_id == user_id)&(Friendship.status=='pending'))
         ).all()
-
+        print(f"\n\n{friendships}\n\n")
         # Extract the friend IDs from the friendships
         friends = []
         for friendship in friendships:
             # If the user is the user_id, the friend is the friend_id, and vice versa
-            if friendship.user_id == user_id:
-                friends.append([friendship,Users.get_user(friendship.friend_id)])
-            else:
-                friends.append([friendship,Users.get_user(friendship.friend_id)])
+            
+            friends.append([friendship,Users.get_user(friendship.user_id)])
 
         return friends
 
