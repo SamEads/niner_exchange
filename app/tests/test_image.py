@@ -15,4 +15,3 @@ def test_image_type(client):
     file.mimetype = "text/html"
     assert allowed_file(file) == False
 
-    print(response.data)
