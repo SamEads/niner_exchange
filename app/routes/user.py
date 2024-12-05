@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, session, redirect,abort,request, url_for, flash
-from ..data.models import Users,Ratings, Uploads
+from ..data.models import Users,Ratings,Uploads, Friendship
 from ..utils.helpers import level,db
 from werkzeug.utils import secure_filename
 

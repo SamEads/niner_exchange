@@ -124,7 +124,9 @@ class Listing(db.Model):
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
-   
+    def get_name(self, user_id):
+        user. User.query.filter_by(id=user_id).first()
+        return user.name if user else "Unknown Owner"
 
 class Uploads(db.Model):
     __tablename__ = 'uploads'

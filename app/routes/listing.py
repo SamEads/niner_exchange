@@ -66,10 +66,12 @@ def allowed_file(file):
 @listing_bp.route('/listing/<int:listing_id>')
 def get_listing(listing_id):
     listing = Listing.query.filter_by(id=listing_id).first()
-    owner = listing.get_name(listing.user_id)
+    owner = Users.query.filter_by(id=listing.user_id).first()
+    owner_name = owner.username if owner else "Unknown Owner"
+
     if listing is None:
         return abort(404, description="Listing not found")
-    return render_template('view_listing.html', listing=listing, owner=owner)
+    return render_template('view_listing.html', listing=listing, owner=owner_name)
 
 
 # routes to the image
