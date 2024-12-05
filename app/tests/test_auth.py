@@ -1,7 +1,4 @@
 
-
-import os 
-from sqlalchemy import inspect,text
 from ..utils.helpers import bcrypt
 from ..data.models import Users
 
