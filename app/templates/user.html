@@ -39,6 +39,15 @@
     {% endfor %}
     {% endif %}
 </div>
+{% if acc_name != session['username'] and friend_flag != 'accepted' and friend_flag != 'pending' %}
+<div class = "mt-2">
+<div class ="float-right">
+    <button id = "friend-btn" 
+    class="btn btn-success"
+    data-other-id="{{acc_name}}"> Send Friend Request </button>
+</div>
+{% endif %}
+</div>
 </div>
 
 
@@ -51,14 +60,6 @@
         <img width="24" height="24" src="https://img.icons8.com/material-rounded/24/user.png" alt="user"/>
         {% endif %}
     </div>
-
-    {% if acc_name != session['username'] and friend_flag != 'accepted' and friend_flag != 'pending' %}
-        <div class ="float-right">
-            <button id = "friend-btn" 
-            class="btn btn-success"
-            data-other-id="{{acc_name}}"> {{friend_flag}} </button>
-        </div>
-    {% endif %}
 
     <div class="user-info">
         <h2>{{ acc_name }}</h2>
