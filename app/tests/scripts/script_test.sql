@@ -80,8 +80,8 @@ CREATE TABLE Messages (
     content TEXT NOT NULL,
     edited BOOLEAN DEFAULT FALSE,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (sender) REFERENCES Users(username) ON DELETE CASCADE,   
-    FOREIGN KEY (recipient) REFERENCES Users(username) ON DELETE CASCADE  
+    FOREIGN KEY (sender) REFERENCES Users(username) ON DELETE CASCADE,
+    FOREIGN KEY (recipient) REFERENCES Users(username) ON DELETE CASCADE
 );
 
 CREATE TABLE Uploads (
@@ -91,6 +91,8 @@ CREATE TABLE Uploads (
     filename TEXT NOT NULL,
     mimetype TEXT NOT NULL
 );
+
+
 
 
 
@@ -105,3 +107,7 @@ CREATE TABLE Friendships (
     UNIQUE (user_id, friend_id)    -- Ensures no duplicate friendships
 );
 
+
+select * from users;
+
+select * from Friendships;

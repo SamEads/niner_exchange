@@ -2,7 +2,6 @@
 from ..utils.helpers import bcrypt
 from ..data.models import Users
 
-
 #Tests if a user can sign up and then delete their account
 def test_new_user(client):
 
@@ -25,6 +24,5 @@ def test_new_user(client):
     
 
 
-    
     
 

@@ -4,6 +4,7 @@ import os
 from app import create_app
 from ..utils.helpers import db 
 from sqlalchemy import text 
+from flask import url_for
 
 @pytest.fixture()
 def app():
@@ -33,9 +34,9 @@ def clear_database():
     # SQL to truncate all tables in the Test_Niner_Ex schema
 
     try:
-        with open("wipe_data.sql","r") as clear_procedure:
+        with open('tests/scripts/wipe_data.sql',"r") as clear_procedure:
             db.session.execute(text(clear_procedure.read()))
             db.session.commit()  # Commit the changes to the database
     except Exception as e: 
-        db.session.rollback()
+        db.session.commit()
         raise e

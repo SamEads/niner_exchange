@@ -39,12 +39,17 @@
         {% endfor %}
         {% endif %}
     </div>
-    {% if acc_name != session['username'] and friend_flag != 'accepted' and friend_flag != 'pending' %}
+    {% if acc_name != session['username'] and friend_flag != 'accepted' %}
     <div class="mt-2">
         <div class="float-right">
             <button id="friend-btn"
                     class="btn btn-success"
-                    data-other-id="{{acc_name}}"> Send Friend Request
+                    data-other-id="{{acc_name}}"> 
+                    {% if friend_flag == 'pending' %}
+                    {{friend_flag}}
+                    {% else %}
+                    Send friend request
+                    {% endif %}
             </button>
         </div>
         {% endif %}

@@ -116,19 +116,21 @@ def search():
 def search_usr(page_num):
 
     query = request.args.get('query')
-    session['usr_query'] = query
-
-    if not query: 
-        return abort(400)
     
+    if not query:
+        query = session.get('usr_query')
+    
+    if not query:
+        query_string = request.query_string.decode('utf-8')
+        if '=' in query_string:
+            query = query_string.split('=')[1]  
 
     res = Users.query.filter(
         (Users.username.ilike(f"%{query}%")) |
         (Users.email.ilike(f"%{query}%"))
     ).paginate(per_page=9,page=page_num,error_out=True)
 
-    for k in res: 
-        k.class_level = level(k.class_level)
+
     return render_template('show_user.html',users=res,query=query)
     
 

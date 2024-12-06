@@ -29,4 +29,5 @@ def test_friendship(client,other_client):
     status = Friendship.check_relationship(i_1,i_2)
 
     assert status == "accepted"
+    
 
