@@ -22,40 +22,41 @@
 {% block content %}
 
 
-
 {% if friends_list %}
-<div class="float-right">
-<h2>Friend List</h2>
-<div class="overflow-auto p-3" style="max-width: 300px; max-height: 300px;">
-    {% for friend in friends_list %}
-    <div class = "card mt-2 mb-2" >
-        <div class = "card-body bg-light">
-            <h5 class="card-title">{{friend.username}}</h5>
-            <h6 class = "card-subtitle mb-3 text-muted">{{friend.class_level}} year student</h6>
-            <p class = "card-text">{{friend.first_name}}</p>
-            <a  href="{{ url_for('user.user', username=friend.username) }}" class="stretched-link">{{friend.first_name}}'s page</a>
+<div class="float-right" style="padding-top: 5rem">
+    <h2>Friend List</h2>
+    <div class="overflow-auto p-3" style="max-width: 300px; max-height: 300px;">
+        {% for friend in friends_list %}
+        <div class="card mt-2 mb-2">
+            <div class="card-body bg-light">
+                <h5 class="card-title">{{friend.username}}</h5>
+                <h6 class="card-subtitle mb-3 text-muted">{{friend.class_level}} year student</h6>
+                <p class="card-text">{{friend.first_name}}</p>
+                <a href="{{ url_for('user.user', username=friend.username) }}" class="stretched-link">{{friend.first_name}}'s
+                    page</a>
+            </div>
         </div>
+        {% endfor %}
+        {% endif %}
     </div>
-    {% endfor %}
-    {% endif %}
+    {% if acc_name != session['username'] and friend_flag != 'accepted' and friend_flag != 'pending' %}
+    <div class="mt-2">
+        <div class="float-right">
+            <button id="friend-btn"
+                    class="btn btn-success"
+                    data-other-id="{{acc_name}}"> Send Friend Request
+            </button>
+        </div>
+        {% endif %}
+    </div>
 </div>
-{% if acc_name != session['username'] and friend_flag != 'accepted' and friend_flag != 'pending' %}
-<div class = "mt-2">
-<div class ="float-right">
-    <button id = "friend-btn" 
-    class="btn btn-success"
-    data-other-id="{{acc_name}}"> Send Friend Request </button>
-</div>
-{% endif %}
-</div>
-</div>
-
 
 
 <div class="user-profile">
     <div class="profile-icon">
         {% if user_image %}
-        <img src="{{ url_for('user.get_user_image', username=acc_name) }}" alt="{{ acc_name }}'s Profile" style="width: auto; height: 200px;">
+        <img src="{{ url_for('user.get_user_image', username=acc_name) }}" alt="{{ acc_name }}'s Profile"
+             style="width: auto; height: 200px;">
         {% else %}
         <img width="24" height="24" src="https://img.icons8.com/material-rounded/24/user.png" alt="user"/>
         {% endif %}
