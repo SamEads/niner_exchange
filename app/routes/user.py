@@ -116,11 +116,14 @@ def search():
 def search_usr(page_num):
 
     query = request.args.get('query')
-    session['usr_query'] = query
-
-    if not query: 
-        return abort(400)
     
+    if not query:
+        query = session.get('usr_query')
+    
+    if not query:
+        query_string = request.query_string.decode('utf-8')
+        if '=' in query_string:
+            query = query_string.split('=')[1]  # Extract the value after '=
 
     res = Users.query.filter(
         (Users.username.ilike(f"%{query}%")) |
