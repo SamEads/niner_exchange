@@ -6,7 +6,7 @@ import string
 
 def test_lookup(client):
 
-    N = random.randrange(start=1,stop=25)
+    N = random.randrange(start=5,stop=50)
     pick = random.randrange(1,N//2)
     search_usr = None
     
