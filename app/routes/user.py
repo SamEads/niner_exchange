@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session, redirect,abort,request, url_for, flash
+from flask import Blueprint, render_template, session, redirect,abort,request, url_for, flash,jsonify
 from ..data.models import Users,Ratings, Uploads,Friendship
 from ..utils.helpers import level,db
 from werkzeug.utils import secure_filename
@@ -123,15 +123,14 @@ def search_usr(page_num):
     if not query:
         query_string = request.query_string.decode('utf-8')
         if '=' in query_string:
-            query = query_string.split('=')[1]  # Extract the value after '=
+            query = query_string.split('=')[1]  
 
     res = Users.query.filter(
         (Users.username.ilike(f"%{query}%")) |
         (Users.email.ilike(f"%{query}%"))
     ).paginate(per_page=9,page=page_num,error_out=True)
 
-    #for k in res: caused bug with testing 
-        #k.class_level = level(k.class_level)
+
     return render_template('show_user.html',users=res,query=query)
     
 
